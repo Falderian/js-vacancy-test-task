@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { EMAIL_REGEX, PASSWORD_REGEX } from 'app-constants';
+import { EMAIL_REGEX } from 'app-constants';
 
 export const paginationSchema = z.object({
   page: z.coerce.number().default(1),
@@ -18,7 +18,7 @@ export const paginationSchema = z.object({
 export const emailSchema = z.string().toLowerCase().regex(EMAIL_REGEX, 'Email format is incorrect.');
 export const passwordSchema = z
   .string()
-  .regex(
-    PASSWORD_REGEX,
-    'The password must contain 6 or more characters with at least one letter (a-z) and one number (0-9).',
-  );
+  .min(8, { message: 'Password must be at least 8 characters long' })
+  .regex(/\d/, { message: 'Password must contain at least 1 number' })
+  .regex(/[a-z]/, { message: 'Password must contain lowercase letters' })
+  .regex(/[A-Z]/, { message: 'Password must contain uppercase letters' });

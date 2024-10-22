@@ -2,19 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import {
-  Anchor,
-  Button,
-  Checkbox,
-  Group,
-  PasswordInput,
-  SimpleGrid,
-  Stack,
-  Text,
-  TextInput,
-  Title,
-  Tooltip,
-} from '@mantine/core';
+import { Anchor, Button, Flex, Group, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 
@@ -29,20 +17,21 @@ import config from 'config';
 
 import { signUpSchema } from 'schemas';
 import { SignUpParams } from 'types';
+import { IconCircleCheck } from '@tabler/icons-react';
 
 type SignUpResponse = { signupToken?: string };
 
 const passwordRules = [
   {
-    title: 'Be 6-50 characters',
+    title: 'Must be at least 8 characters',
     done: false,
   },
   {
-    title: 'Have at least one letter',
+    title: 'Must contain at least 1 number',
     done: false,
   },
   {
-    title: 'Have at least one number',
+    title: 'Must contain lower case and capital letters',
     done: false,
   },
 ];
@@ -61,42 +50,39 @@ const SignUp: NextPage = () => {
     setError,
     watch,
     formState: { errors },
-  } = useForm<SignUpParams>({ resolver: zodResolver(signUpSchema) });
+  } = useForm<SignUpParams>({});
 
   const passwordValue = watch('password', '').trim();
 
   useEffect(() => {
     const updatedPasswordRulesData = [...passwordRules];
 
-    updatedPasswordRulesData[0].done = passwordValue.length >= 6 && passwordValue.length <= 50;
-    updatedPasswordRulesData[1].done = /[a-zA-Z]/.test(passwordValue);
-    updatedPasswordRulesData[2].done = /\d/.test(passwordValue);
+    updatedPasswordRulesData[0].done = passwordValue.length >= 8;
+    updatedPasswordRulesData[1].done = /\d/.test(passwordValue);
+    updatedPasswordRulesData[2].done = /[a-z]/.test(passwordValue) && /[A-Z]/.test(passwordValue);
 
     setPasswordRulesData(updatedPasswordRulesData);
   }, [passwordValue]);
 
   const { mutate: signUp, isPending: isSignUpPending } = accountApi.useSignUp();
 
-  const onSubmit = (data: SignUpParams) =>
-    signUp(data, {
-      onSuccess: (response: SignUpResponse) => {
-        if (response.signupToken) setSignupToken(response.signupToken);
+  const onSubmit = (data: SignUpParams) => {
+    signUp(
+      { ...data, firstName: 'FirstName', lastName: 'LastName' },
+      {
+        onSuccess: (response: SignUpResponse) => {
+          if (response.signupToken) setSignupToken(response.signupToken);
 
-        setRegistered(true);
-        setEmail(data.email);
+          setRegistered(true);
+          setEmail(data.email);
+        },
+        onError: (e) => {
+          console.log(e);
+          return handleApiError(e, setError);
+        },
       },
-      onError: (e) => handleApiError(e, setError),
-    });
-
-  const label = (
-    <SimpleGrid cols={1} spacing="xs" p={4}>
-      <Text>Password must:</Text>
-
-      {passwordRulesData.map((ruleData) => (
-        <Checkbox key={ruleData.title} label={ruleData.title} checked={ruleData.done} color="white" iconColor="dark" />
-      ))}
-    </SimpleGrid>
-  );
+    );
+  };
 
   if (registered) {
     return (
@@ -139,56 +125,39 @@ const SignUp: NextPage = () => {
           <form onSubmit={handleSubmit(onSubmit)}>
             <Stack gap={20}>
               <TextInput
-                {...register('firstName')}
-                label="First Name"
-                maxLength={100}
-                placeholder="Enter first Name"
-                error={errors.firstName?.message}
-              />
-
-              <TextInput
-                {...register('lastName')}
-                label="Last Name"
-                maxLength={100}
-                placeholder="Enter last Name"
-                error={errors.lastName?.message}
-              />
-
-              <TextInput
                 {...register('email')}
                 label="Email Address"
                 placeholder="Enter email Address"
                 error={errors.email?.message}
               />
 
-              <Tooltip label={label} opened={opened} withArrow>
-                <PasswordInput
-                  {...register('password')}
-                  label="Password"
-                  placeholder="Enter password"
-                  onFocus={() => setOpened(true)}
-                  onBlur={() => setOpened(false)}
-                  error={errors.password?.message}
-                />
-              </Tooltip>
+              <PasswordInput
+                {...register('password')}
+                label="Password"
+                placeholder="Enter password"
+                onFocus={() => setOpened(true)}
+                onBlur={() => setOpened(false)}
+                error={errors.password?.message}
+              />
+              <Stack>
+                {passwordRulesData.map((rule) => (
+                  <Flex key={rule.title} align="center" gap={14}>
+                    <IconCircleCheck color={rule.done ? 'blue' : 'red'} />
+                    <Text key={rule.title} color={rule.done ? 'gray' : 'red'} size="sm">
+                      {rule.title}
+                    </Text>
+                  </Flex>
+                ))}
+              </Stack>
             </Stack>
 
-            <Button type="submit" loading={isSignUpPending} fullWidth mt={32}>
+            <Button type="submit" loading={isSignUpPending} fullWidth mt={32} onClick={handleSubmit(onSubmit)}>
               Sign Up
             </Button>
           </form>
         </Stack>
 
         <Stack gap={32}>
-          <Button
-            component="a"
-            leftSection={<GoogleIcon />}
-            href={`${config.API_URL}/account/sign-in/google/auth`}
-            variant="outline"
-          >
-            Continue with Google
-          </Button>
-
           <Group justify="center" gap={12}>
             Have an account?
             <Anchor component={Link} href={RoutePath.SignIn}>

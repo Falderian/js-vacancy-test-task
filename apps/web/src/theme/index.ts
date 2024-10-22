@@ -12,7 +12,7 @@ const theme = createTheme({
     fontFamily: `${inter.style.fontFamily}, ${DEFAULT_THEME.fontFamily}`,
     fontWeight: '600',
   },
-  primaryColor: 'dark',
+  primaryColor: 'blue',
   components,
 });
 
