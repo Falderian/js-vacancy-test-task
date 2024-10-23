@@ -1,100 +1,71 @@
-import React, { FC, useLayoutEffect, useState } from 'react';
-import { ActionIcon, ComboboxItem, Group, Select, TextInput } from '@mantine/core';
-import { DatePickerInput, DatesRangeValue } from '@mantine/dates';
-import { useDebouncedValue, useInputState, useSetState } from '@mantine/hooks';
-import { IconSearch, IconSelector, IconX } from '@tabler/icons-react';
-import { set } from 'lodash';
+import React, { FC, useEffect, useState } from 'react';
+import { Input, Stack, Text, Flex } from '@mantine/core';
+import { IconX } from '@tabler/icons-react';
 
-import { UsersListParams } from 'resources/user';
+import { debounce } from 'lodash';
+import { useRouter } from 'next/router';
 
-const selectOptions: ComboboxItem[] = [
-  {
-    value: 'newest',
-    label: 'Newest',
-  },
-  {
-    value: 'oldest',
-    label: 'Oldest',
-  },
-];
+const Filters = () => {
+  const [min, setMin] = useState('');
+  const [max, setMax] = useState('');
+  const router = useRouter();
+  const { query } = router;
 
-interface FiltersProps {
-  setParams: ReturnType<typeof useSetState<UsersListParams>>[1];
-}
+  useEffect(() => {
+    const newQuery = { ...query };
+    if (min) newQuery.min = min;
+    else delete newQuery.min;
 
-const Filters: FC<FiltersProps> = ({ setParams }) => {
-  const [search, setSearch] = useInputState('');
-  const [sortBy, setSortBy] = useState<string | null>(selectOptions[0].value);
-  const [filterDate, setFilterDate] = useState<DatesRangeValue>();
+    if (max) newQuery.max = max;
+    else delete newQuery.max;
 
-  const [debouncedSearch] = useDebouncedValue(search, 500);
+    router.push({ query: newQuery }, undefined, { shallow: true });
+  }, [min, max]);
 
-  const handleSort = (value: string | null) => {
-    setSortBy(value);
-
-    setParams((old) => set(old, 'sort.createdOn', value === 'newest' ? 'desc' : 'asc'));
+  const resetFilters = () => {
+    setMin('');
+    setMax('');
   };
-
-  const handleFilter = ([startDate, endDate]: DatesRangeValue) => {
-    setFilterDate([startDate, endDate]);
-
-    if (!startDate) {
-      setParams({ filter: undefined });
-    }
-
-    if (endDate) {
-      setParams({
-        filter: {
-          createdOn: { startDate, endDate },
-        },
-      });
-    }
-  };
-
-  useLayoutEffect(() => {
-    setParams({ searchValue: debouncedSearch });
-  }, [debouncedSearch]);
 
   return (
-    <Group wrap="nowrap" justify="space-between">
-      <Group wrap="nowrap">
-        <TextInput
-          w={350}
-          size="md"
-          value={search}
-          onChange={setSearch}
-          placeholder="Search by name or email"
-          leftSection={<IconSearch size={16} />}
-          rightSection={
-            search && (
-              <ActionIcon variant="transparent" onClick={() => setSearch('')}>
-                <IconX color="gray" stroke={1} />
-              </ActionIcon>
-            )
-          }
+    <Stack bg="white" maw="fit-content" p={20} style={{ borderRadius: 12 }} bd="1px #ECECEE solid">
+      <Flex align="center" justify="space-between">
+        <Text size="xl" fw={600}>
+          Filters
+        </Text>
+        <Flex align="center" justify="center" gap={4} style={{ cursor: 'pointer' }} onClick={resetFilters}>
+          <Text color="gray" size="sm" span>
+            Reset All
+          </Text>
+          <IconX color="gray" size={16} />
+        </Flex>
+      </Flex>
+      <Stack>
+        <Text size="lg" fw={600}>
+          Price
+        </Text>
+        <Input
+          type="number"
+          name="min"
+          leftSection="From:"
+          leftSectionWidth={60}
+          rightSection="$"
+          fw={500}
+          value={min}
+          onChange={(e) => setMin(e.target.value)}
         />
-
-        <Select
-          w={200}
-          size="md"
-          data={selectOptions}
-          value={sortBy}
-          onChange={handleSort}
-          allowDeselect={false}
-          rightSection={<IconSelector size={16} />}
-          comboboxProps={{
-            withinPortal: false,
-            transitionProps: {
-              transition: 'fade',
-              duration: 120,
-              timingFunction: 'ease-out',
-            },
-          }}
+        <Input
+          type="number"
+          name="max"
+          leftSection="To:"
+          leftSectionWidth={60}
+          rightSection="$"
+          fw={500}
+          value={max}
+          onChange={(e) => setMax(e.target.value)}
         />
-
-        <DatePickerInput type="range" size="md" placeholder="Pick date" value={filterDate} onChange={handleFilter} />
-      </Group>
-    </Group>
+      </Stack>
+    </Stack>
   );
 };
 export default Filters;

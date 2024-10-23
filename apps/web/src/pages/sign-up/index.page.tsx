@@ -15,7 +15,6 @@ import { handleApiError } from 'utils';
 import { RoutePath } from 'routes';
 import config from 'config';
 
-import { signUpSchema } from 'schemas';
 import { SignUpParams } from 'types';
 import { IconCircleCheck } from '@tabler/icons-react';
 
@@ -68,7 +67,7 @@ const SignUp: NextPage = () => {
 
   const onSubmit = (data: SignUpParams) => {
     signUp(
-      { ...data, firstName: 'FirstName', lastName: 'LastName' },
+      { ...data, firstName: '', lastName: '' },
       {
         onSuccess: (response: SignUpResponse) => {
           if (response.signupToken) setSignupToken(response.signupToken);
