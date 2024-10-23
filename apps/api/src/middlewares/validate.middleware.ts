@@ -25,7 +25,9 @@ const validate = (schema: ZodSchema) => async (ctx: AppKoaContext, next: Next) =
     ...ctx.params,
   });
 
-  if (!result.success) ctx.throw(400, { clientErrors: formatError(result.error) });
+  if (!result.success) {
+    ctx.throw(400, { clientErrors: formatError(result.error) });
+  }
 
   ctx.validatedData = result.data;
 

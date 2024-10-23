@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Input, Stack, Text, Flex } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 
@@ -6,10 +6,10 @@ import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 
 const Filters = () => {
-  const [min, setMin] = useState('');
-  const [max, setMax] = useState('');
   const router = useRouter();
   const { query } = router;
+  const [min, setMin] = useState(query.min);
+  const [max, setMax] = useState(query.max);
 
   useEffect(() => {
     const newQuery = { ...query };

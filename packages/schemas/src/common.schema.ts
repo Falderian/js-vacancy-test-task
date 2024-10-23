@@ -4,7 +4,7 @@ import { EMAIL_REGEX } from 'app-constants';
 
 export const paginationSchema = z.object({
   page: z.coerce.number().default(1),
-  perPage: z.coerce.number().default(10),
+  perPage: z.coerce.number().default(6),
 
   searchValue: z.string().optional(),
 

@@ -19,6 +19,7 @@ const Search = () => {
 
   return (
     <TextInput
+      w="100%"
       placeholder="Search..."
       value={search}
       onChange={(e) => setSearch(e.target.value)}
