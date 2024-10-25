@@ -22,10 +22,30 @@ export type ProductsListSortParams = {
   price?: SortOrder;
 };
 
+export interface IProduct {
+  _id: string;
+  createdOn: string;
+  updatedOn: string;
+  title: string;
+  price: number;
+}
+
+interface IProductsResponse {
+  page: number;
+  perPage: number;
+  totalItems: number;
+  totalPages: number;
+  products: {
+    pagesCount: number;
+    results: IProduct[];
+    count: number;
+  };
+}
+
 export type ProductsListParams = ListParams<ProductsListFilterParams, ProductsListSortParams>;
 
 export const useList = <T extends ProductsListParams>(params: T) =>
-  useQuery<ListResult<any>>({
+  useQuery<ProductsResponse>({
     queryKey: ['products', params],
     queryFn: () => apiService.get('/products', params),
   });

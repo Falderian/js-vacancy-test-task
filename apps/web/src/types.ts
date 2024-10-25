@@ -20,5 +20,5 @@ export type ListParams<T, F> = {
   perPage?: number;
   searchValue?: string;
   filter?: T;
-  sort?: SortParams<F>;
+  sort?: SortParams<F> | string;
 };

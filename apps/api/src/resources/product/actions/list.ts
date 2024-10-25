@@ -1,30 +1,38 @@
-// src/resources/product/actions/list.ts
 import { AppKoaContext, AppRouter } from 'types';
 import productService from '../product.service';
-import { paginationSchema } from 'schemas';
 import { validateMiddleware } from 'middlewares';
-import { PaginationParams } from 'schemas/src/product.schema';
+import { PaginationParams, productsPaginationSchema } from 'schemas/src/product.schema';
 
 const list = async (ctx: AppKoaContext<PaginationParams>) => {
   const { page, sort } = ctx.validatedData;
   const filterOptions: Record<string, any> = {};
-  const { min, max } = ctx.query.price || {};
-  const title = ctx.query.title;
+  const sortOptions: Record<string, number> = {};
+  const perPage = +(ctx.query.perPage || 6);
+  const { min, max, title } = ctx.query;
 
-  if (title) {
-    filterOptions.title = { $regex: title, $options: 'i' };
+  if (title) filterOptions.title = { $regex: title, $options: 'i' };
+  if (min || max) {
+    filterOptions.price = {};
+    if (min) filterOptions.price.$gte = Number(min);
+    if (max) filterOptions.price.$lte = Number(max);
   }
 
-  if (min) {
-    filterOptions.price = { ...filterOptions.price, $gte: Number(min) };
+  switch (sort) {
+    case 'newest':
+      sortOptions.created = -1;
+      break;
+    case 'oldest':
+      sortOptions.created = 1;
+      break;
+    case 'cheap':
+      sortOptions.price = 1;
+      break;
+    case 'expensive':
+      sortOptions.price = -1;
+      break;
   }
 
-  if (max) {
-    filterOptions.price = { ...filterOptions.price, $lte: Number(max) };
-  }
-
-  const perPage = 6;
-  const { results, totalItems } = await productService.findProducts(filterOptions, page, perPage, sort);
+  const { results, totalItems } = await productService.findProducts(filterOptions, +page, perPage, sortOptions);
 
   ctx.body = {
     page,
@@ -36,5 +44,5 @@ const list = async (ctx: AppKoaContext<PaginationParams>) => {
 };
 
 export default (router: AppRouter) => {
-  router.get('/', validateMiddleware(paginationSchema), list);
+  router.get('/', validateMiddleware(productsPaginationSchema), list);
 };

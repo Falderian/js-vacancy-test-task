@@ -1,15 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { Input, Stack, Text, Flex } from '@mantine/core';
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { Stack, Text, Flex, TextInput } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
 
-import { debounce } from 'lodash';
 import { useRouter } from 'next/router';
 
 const Filters = () => {
   const router = useRouter();
   const { query } = router;
-  const [min, setMin] = useState(query.min);
-  const [max, setMax] = useState(query.max);
+  const [min, setMin] = useState(query.min || '');
+  const [max, setMax] = useState(query.max || '');
+
+  useEffect(() => {
+    if (!query.min && !query.max) resetFilters();
+  }, [query.min, query.max]);
 
   useEffect(() => {
     const newQuery = { ...query };
@@ -22,10 +25,28 @@ const Filters = () => {
     router.push({ query: newQuery }, undefined, { shallow: true });
   }, [min, max]);
 
-  const resetFilters = () => {
+  const resetFilters = useCallback(() => {
     setMin('');
     setMax('');
-  };
+  }, []);
+
+  const inputs = useMemo(
+    () => [
+      {
+        name: 'min',
+        leftSection: 'From:',
+        value: min,
+        onChange: (e: ChangeEvent<HTMLInputElement>) => setMin(e.target.value),
+      },
+      {
+        name: 'max',
+        leftSection: 'To:',
+        value: max,
+        onChange: (e: ChangeEvent<HTMLInputElement>) => setMax(e.target.value),
+      },
+    ],
+    [min, max],
+  );
 
   return (
     <Stack bg="white" maw="fit-content" p={20} style={{ borderRadius: 12 }} bd="1px #ECECEE solid">
@@ -34,7 +55,7 @@ const Filters = () => {
           Filters
         </Text>
         <Flex align="center" justify="center" gap={4} style={{ cursor: 'pointer' }} onClick={resetFilters}>
-          <Text color="gray" size="sm" span>
+          <Text c="gray" size="sm">
             Reset All
           </Text>
           <IconX color="gray" size={16} />
@@ -44,26 +65,9 @@ const Filters = () => {
         <Text size="lg" fw={600}>
           Price
         </Text>
-        <Input
-          type="number"
-          name="min"
-          leftSection="From:"
-          leftSectionWidth={60}
-          rightSection="$"
-          fw={500}
-          value={min}
-          onChange={(e) => setMin(e.target.value)}
-        />
-        <Input
-          type="number"
-          name="max"
-          leftSection="To:"
-          leftSectionWidth={60}
-          rightSection="$"
-          fw={500}
-          value={max}
-          onChange={(e) => setMax(e.target.value)}
-        />
+        {inputs.map((input) => (
+          <TextInput key={input.name} type="number" leftSectionWidth={60} rightSection="$" fw={500} {...input} />
+        ))}
       </Stack>
     </Stack>
   );

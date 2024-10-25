@@ -1,30 +1,42 @@
-import React, { useEffect } from 'react';
-import { NextPage } from 'next';
 import { Flex, Stack } from '@mantine/core';
+import { NextPage } from 'next';
 
-import Filters from './components/Filters';
-import Search from './components/Search';
-import { useList } from '../../resources/product/product.api';
 import { useRouter } from 'next/router';
+import { useList } from '../../resources/product/product.api';
+import Filters from './components/Filters';
 import ProductsList from './components/ProductsList';
+import ProductsPagination from './components/ProductsPagination';
+import ProductsPerPageSelect from './components/ProductsPerPageSelect';
+import Search from './components/Search';
 
 const Home: NextPage = () => {
   const { query } = useRouter();
 
-  const { min, max, search, page } = query;
+  const { min, max, search, page, perPage, sort } = query;
 
-  const { data, error } = useList({
-    price: { min, max },
+  const { data } = useList({
+    min,
+    max,
     title: search,
     page: +(page || 1),
+    perPage: +(perPage || 6),
+    sort: sort?.toString() || 'newest',
   });
-  console.log(data);
+
   return (
     <Flex gap={28}>
       <Filters />
-      <Stack w="100%">
+      <Stack w="100%" align="center">
         <Search />
-        {data && <ProductsList data={data.products} />}
+        {data && (
+          <>
+            <ProductsList data={data.products} />
+            <Stack>
+              <ProductsPerPageSelect />
+              <ProductsPagination total={data.totalPages} />
+            </Stack>
+          </>
+        )}
       </Stack>
     </Flex>
   );

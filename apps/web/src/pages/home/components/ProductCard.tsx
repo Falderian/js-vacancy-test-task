@@ -1,7 +1,6 @@
-import { Flex, Stack, Text, Image, Button } from '@mantine/core';
+import { Button, Flex, Image, Stack, Text } from '@mantine/core';
 
 type Product = {
-  id: number;
   title: string;
   price: number;
   image: string;
@@ -18,10 +17,14 @@ const ProductCard = ({ product }: { product: Product }) => {
         radius="md"
       />
       <Stack px={18}>
-        <Text>{product.title}</Text>
+        <Text size="lg" fw={700}>
+          {product.title}
+        </Text>
         <Flex justify="space-between">
-          <Text color="grey">Price: </Text>
-          <Text>{product.price}$</Text>
+          <Text color="grey" size="sm">
+            Price:{' '}
+          </Text>
+          <Text fw={700}>${product.price}</Text>
         </Flex>
 
         <Button>Add to cart</Button>

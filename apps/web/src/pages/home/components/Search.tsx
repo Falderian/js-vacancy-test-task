@@ -1,7 +1,7 @@
+import { ActionIcon, TextInput } from '@mantine/core';
+import { IconSearch, IconX } from '@tabler/icons-react';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import { TextInput, ActionIcon } from '@mantine/core';
-import { IconSearch, IconSelector, IconX } from '@tabler/icons-react';
 
 const Search = () => {
   const router = useRouter();

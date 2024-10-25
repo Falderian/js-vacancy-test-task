@@ -98,7 +98,6 @@ class ApiClient {
       fullName: 'Full name',
     };
 
-    console.log(payload);
     return this._api({
       method: 'post',
       url,

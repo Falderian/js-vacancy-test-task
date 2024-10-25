@@ -20,13 +20,9 @@ export const boughtItemSchema = z.object({
 
 export const purchaseHistorySchema = z.array(boughtItemSchema);
 
-export const paginationSchema = z.object({
-  page: z.number().min(1).default(1),
-  sort: z
-    .object({
-      title: z.enum(['asc', 'desc']).default('asc'),
-    })
-    .default({ title: 'asc' }),
+export const productsPaginationSchema = z.object({
+  page: z.string().min(1).default('1'),
+  sort: z.enum(['newest', 'oldest', 'cheap', 'expensive']).default('newest'),
   filter: z
     .object({
       title: z.string().optional(),
@@ -36,4 +32,4 @@ export const paginationSchema = z.object({
     .optional(),
 });
 
-export type PaginationParams = z.infer<typeof paginationSchema>;
+export type PaginationParams = z.infer<typeof productsPaginationSchema>;
