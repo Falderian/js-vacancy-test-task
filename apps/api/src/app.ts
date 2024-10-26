@@ -15,8 +15,8 @@ import helmet from 'koa-helmet';
 import koaLogger from 'koa-logger';
 import qs from 'koa-qs';
 
-import { socketService } from 'services';
 import routes from 'routes';
+import { socketService } from 'services';
 
 import config from 'config';
 

@@ -1,5 +1,5 @@
 import { DateValue } from '@mantine/dates';
-import { useQuery } from '@tanstack/react-query';
+import { useMutation, useQuery } from '@tanstack/react-query';
 
 import { apiService } from 'services';
 
@@ -43,6 +43,13 @@ interface IProductsResponse {
   };
 }
 
+export type CreateProductData = {
+  title: string;
+  userId: string;
+  image: File;
+  price: number;
+};
+
 export type ProductsListParams = ListParams<ProductsListFilterParams, ProductsListSortParams>;
 
 export const useList = <T extends ProductsListParams>(params: T) =>
@@ -66,5 +73,18 @@ export const useHistory = (userId: string) => {
   return useQuery<{ count: string; results: any[] }>({
     queryKey: ['history', userId],
     queryFn: () => apiService.get('products/history', { userId }),
+  });
+};
+
+export const useCreateProduct = () => {
+  return useMutation({
+    mutationFn: async (data: FormData) => {
+      const response = await apiService.post('products/new', data, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+      return response.data;
+    },
   });
 };

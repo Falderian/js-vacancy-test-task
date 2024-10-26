@@ -1,8 +1,8 @@
-import _ from 'lodash';
 import db from 'db';
 import { DATABASE_DOCUMENTS } from 'app-constants';
 import { productSchema } from 'schemas/src/product.schema';
 import { Product } from 'app-types/src/product.types';
+import _ from 'lodash';
 
 const productService = db.createService<Product>(DATABASE_DOCUMENTS.PRODUCTS, {
   schemaValidator: (obj) => productSchema.parseAsync(obj),
