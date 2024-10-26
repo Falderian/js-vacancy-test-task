@@ -14,7 +14,7 @@ const Search = () => {
     if (search) newQuery.search = search;
     else delete newQuery.search;
 
-    router.push({ query: newQuery }, undefined, { shallow: true });
+    router.push({ query: { ...newQuery, page: 1 } }, undefined, { shallow: true });
   }, [search]);
 
   return (

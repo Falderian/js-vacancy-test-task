@@ -49,7 +49,14 @@ const ProductsList = ({ data }: Props) => {
         <ProductsSortMenu />
       </Flex>
       {pricePill()}
-      <Flex gap={20} wrap="wrap" justify="flex-start" w="100%" mah="70vh" style={{ overflow: 'auto' }}>
+      <Flex
+        gap={20}
+        wrap="wrap"
+        justify="flex-start"
+        w="100%"
+        mah={{ base: '50vh', sm: '63vh' }}
+        style={{ overflow: 'auto' }}
+      >
         {data.count ? (
           data.results.map((prod) => <ProductCard key={prod._id} product={prod} />)
         ) : (

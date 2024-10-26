@@ -8,12 +8,9 @@ import { useForm } from 'react-hook-form';
 
 import { accountApi } from 'resources/account';
 
-import { GoogleIcon } from 'public/icons';
-
 import { handleApiError } from 'utils';
 
 import { RoutePath } from 'routes';
-import config from 'config';
 
 import { signInSchema } from 'schemas';
 import { SignInParams } from 'types';

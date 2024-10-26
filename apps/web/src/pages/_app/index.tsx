@@ -16,6 +16,7 @@ import PageConfig from './PageConfig';
 import '@mantine/core/styles.layer.css';
 import '@mantine/dates/styles.layer.css';
 import '@mantine/notifications/styles.layer.css';
+import { CartProvider } from '../../contexts/cart.context';
 
 const App: FC<AppProps> = ({ Component, pageProps }) => (
   <>
@@ -26,9 +27,11 @@ const App: FC<AppProps> = ({ Component, pageProps }) => (
     <QueryClientProvider client={queryClient}>
       <MantineProvider theme={theme}>
         <ModalsProvider>
-          <PageConfig>
-            <Component {...pageProps} />
-          </PageConfig>
+          <CartProvider>
+            <PageConfig>
+              <Component {...pageProps} />
+            </PageConfig>
+          </CartProvider>
         </ModalsProvider>
 
         <Notifications autoClose={10000} />

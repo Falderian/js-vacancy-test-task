@@ -1,39 +1,57 @@
-import { useState, useRef } from 'react';
-import { FloatingIndicator, Tabs } from '@mantine/core';
+import { useState, useRef, useEffect } from 'react';
+import { Tabs } from '@mantine/core';
 import { useRouter } from 'next/router';
 import classes from './index.module.css';
 
 const AppTabs = () => {
   const router = useRouter();
-  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
-  const [value, setValue] = useState<string | null>('marketplace');
   const controlsRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
+  const tabData = [
+    { label: 'Marketplace', path: '/tabs/marketplace' },
+    { label: 'Your Products', path: '/tabs/your-products' },
+  ];
+
+  const validRoutes = tabData.map((tab) => tab.path);
+  const currentPath = router.pathname;
+
+  const [value, setValue] = useState<string | null>(validRoutes.includes(currentPath) ? currentPath : null);
+
   const setControlRef = (val: string) => (node: HTMLButtonElement | null) => {
-    if (node) {
-      controlsRefs.current[val] = node;
-    }
+    if (node) controlsRefs.current[val] = node;
   };
 
-  const handleTabChange = (tabValue: string) => {
+  const handleTabChange = (tabValue: string | null) => {
+    if (!tabValue || !validRoutes.includes(tabValue)) {
+      setValue(null);
+      return;
+    }
+    setValue(tabValue);
     router.push(tabValue, undefined, { shallow: true });
   };
 
-  return (
-    <Tabs variant="none" value={value} onChange={handleTabChange}>
-      <Tabs.List ref={setRootRef} className={classes.list}>
-        <Tabs.Tab value="/" ref={setControlRef('marketplace')} className={classes.tab}>
-          Marketplace
-        </Tabs.Tab>
-        <Tabs.Tab value="your-products" ref={setControlRef('your-products')} className={classes.tab}>
-          Your Products
-        </Tabs.Tab>
+  useEffect(() => {
+    if (validRoutes.includes(currentPath)) {
+      setValue(currentPath);
+    } else {
+      setValue(null);
+    }
+  }, [currentPath]);
 
-        <FloatingIndicator
-          target={value ? controlsRefs.current[value] : null}
-          parent={rootRef}
-          className={classes.indicator}
-        />
+  return (
+    <Tabs variant="none" value={value} onChange={handleTabChange} w="100%">
+      <Tabs.List className={classes.list}>
+        {tabData.map((tab) => (
+          <Tabs.Tab
+            key={tab.path}
+            value={tab.path}
+            ref={setControlRef(tab.path)}
+            className={`${classes.tab} ${value === tab.path ? classes.active : ''}`}
+            fz="md"
+          >
+            {tab.label}
+          </Tabs.Tab>
+        ))}
       </Tabs.List>
     </Tabs>
   );

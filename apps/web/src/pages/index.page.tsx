@@ -1,3 +1,3 @@
-import Home from 'pages/home';
+import Marketplace from './tabs/marketplace/index.page';
 
-export default Home;
+export default Marketplace;

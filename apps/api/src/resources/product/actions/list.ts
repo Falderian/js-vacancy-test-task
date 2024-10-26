@@ -32,6 +32,8 @@ const list = async (ctx: AppKoaContext<PaginationParams>) => {
       break;
   }
 
+  sortOptions._id = 1;
+
   const { results, totalItems } = await productService.findProducts(filterOptions, +page, perPage, sortOptions);
 
   ctx.body = {

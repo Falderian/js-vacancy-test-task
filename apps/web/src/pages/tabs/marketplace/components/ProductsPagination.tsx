@@ -23,7 +23,7 @@ const ProductsPagination = ({ total }: { total: number }) => {
       value={page}
       total={total}
       onChange={changePage}
-      styles={{ control: { border: '1px #ECECEE solid' } }}
+      styles={{ control: { border: '1px #ECECEE solid' }, root: { flexWrap: 'wrap' } }}
     />
   );
 };

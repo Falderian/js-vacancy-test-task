@@ -11,7 +11,7 @@ const ProductsSortMenu = () => {
 
   const handleChange = (value: string | null) => {
     if (!value || value === selectedValue) return;
-    router.push({ query: { ...query, sort: value } }, undefined, { shallow: true });
+    router.push({ query: { ...query, sort: value, page: 1 } }, undefined, { shallow: true });
   };
 
   return (

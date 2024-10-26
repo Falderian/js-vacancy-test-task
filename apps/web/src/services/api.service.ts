@@ -91,17 +91,10 @@ class ApiClient {
   }
 
   post<T, D>(url: string, data: D | unknown = {}, requestConfig: AxiosRequestConfig = {}): Promise<T> {
-    const payload = {
-      ...(data as object),
-      firstName: 'First Name',
-      lastName: 'Last name',
-      fullName: 'Full name',
-    };
-
     return this._api({
       method: 'post',
       url,
-      data: payload,
+      data,
       ...requestConfig,
     });
   }

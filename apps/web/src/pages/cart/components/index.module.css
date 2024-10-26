@@ -1,0 +1,19 @@
+.list::before {
+  border-width: 0;
+}
+
+.indicator {
+  display: none;
+}
+
+.tab {
+  z-index: 1;
+  font-weight: 500;
+  color: var(--mantine-color-gray-7);
+
+  &[data-active] {
+    color: var(--mantine-color-black);
+    font-weight: 600;
+    border: none;
+  }
+}

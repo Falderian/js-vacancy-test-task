@@ -8,8 +8,9 @@ import { LogoImage } from 'public/images';
 
 import { RoutePath } from 'routes';
 
-import ShadowLoginBanner from './components/ShadowLoginBanner';
 import AppTabs from '../../../../../components/Tabs/AppTabs';
+
+import HeaderIcons from './components/HeaderIcons';
 
 const Header: FC = () => {
   const { data: account } = accountApi.useGet();
@@ -18,8 +19,6 @@ const Header: FC = () => {
 
   return (
     <AppShell.Header bg="transparent" bd="none" style={{ flexDirection: 'row', display: 'flex' }}>
-      {account.isShadow && <ShadowLoginBanner email={account.email} />}
-
       <Anchor component={Link} href={RoutePath.Home} underline="never">
         <Flex px={40} py={30} gap={10} align="center">
           <LogoImage />
@@ -29,6 +28,7 @@ const Header: FC = () => {
         </Flex>
       </Anchor>
       <AppTabs />
+      <HeaderIcons />
     </AppShell.Header>
   );
 };

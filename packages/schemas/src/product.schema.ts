@@ -9,17 +9,6 @@ export const productSchema = dbSchema
   })
   .strip();
 
-export const boughtItemSchema = z.object({
-  productId: z.string(),
-  title: z.string(),
-  price: z.number().min(0),
-  quantity: z.number().min(1, 'Quantity must be at least 1'),
-  totalPrice: z.number().min(0),
-  boughtOn: z.date(),
-});
-
-export const purchaseHistorySchema = z.array(boughtItemSchema);
-
 export const productsPaginationSchema = z.object({
   page: z.string().min(1).default('1'),
   sort: z.enum(['newest', 'oldest', 'cheap', 'expensive']).default('newest'),

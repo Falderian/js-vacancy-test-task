@@ -22,7 +22,7 @@ const Filters = () => {
     if (max) newQuery.max = max;
     else delete newQuery.max;
 
-    router.push({ query: newQuery }, undefined, { shallow: true });
+    router.push({ query: { ...newQuery, page: 1 } }, undefined, { shallow: true });
   }, [min, max]);
 
   const resetFilters = useCallback(() => {

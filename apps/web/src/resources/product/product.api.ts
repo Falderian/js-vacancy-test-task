@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 
 import { apiService } from 'services';
 
-import { ListParams, ListResult, SortOrder } from 'types';
+import { ListParams, SortOrder } from 'types';
 
 export type ProductsListFilterParams = {
   createdOn?: {
@@ -28,6 +28,7 @@ export interface IProduct {
   updatedOn: string;
   title: string;
   price: number;
+  image: string;
 }
 
 interface IProductsResponse {
@@ -45,7 +46,25 @@ interface IProductsResponse {
 export type ProductsListParams = ListParams<ProductsListFilterParams, ProductsListSortParams>;
 
 export const useList = <T extends ProductsListParams>(params: T) =>
-  useQuery<ProductsResponse>({
+  useQuery<IProductsResponse>({
     queryKey: ['products', params],
     queryFn: () => apiService.get('/products', params),
   });
+
+export const useCheckout = (
+  userId: string,
+  items: Array<{ productId: string; title: string; price: number; quantity: number }>,
+) => {
+  return useQuery({
+    queryKey: ['checkout', items],
+    queryFn: () => apiService.post('/products/checkout', items, { params: { userId } }),
+    enabled: items.length > 0,
+  });
+};
+
+export const useHistory = (userId: string) => {
+  return useQuery<{ count: string; results: any[] }>({
+    queryKey: ['history', userId],
+    queryFn: () => apiService.get('products/history', { userId }),
+  });
+};

@@ -1,15 +1,14 @@
-import { Flex, Stack } from '@mantine/core';
-import { NextPage } from 'next';
-
+import { Flex, Stack, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
-import { useList } from '../../resources/product/product.api';
+import { useList } from '../../../resources/product/product.api';
+
 import Filters from './components/Filters';
 import ProductsList from './components/ProductsList';
 import ProductsPagination from './components/ProductsPagination';
 import ProductsPerPageSelect from './components/ProductsPerPageSelect';
 import Search from './components/Search';
 
-const Home: NextPage = () => {
+const Marketplace = () => {
   const { query } = useRouter();
 
   const { min, max, search, page, perPage, sort } = query;
@@ -28,7 +27,7 @@ const Home: NextPage = () => {
       <Filters />
       <Stack w="100%" align="center">
         <Search />
-        {data && (
+        {data?.totalItems ? (
           <>
             <ProductsList data={data.products} />
             <Stack>
@@ -36,10 +35,12 @@ const Home: NextPage = () => {
               <ProductsPagination total={data.totalPages} />
             </Stack>
           </>
+        ) : (
+          <Text>No results were found</Text>
         )}
       </Stack>
     </Flex>
   );
 };
 
-export default Home;
+export default Marketplace;

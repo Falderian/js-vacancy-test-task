@@ -8,7 +8,7 @@ const ProductsPerPageSelect = () => {
 
   const handleChange = (v: string | null) => {
     if (!v || v === selectedValue) return;
-    router.push({ query: { ...query, perPage: v } }, undefined, { shallow: true });
+    router.push({ query: { ...query, perPage: v, page: 1 } }, undefined, { shallow: true });
   };
 
   return (
