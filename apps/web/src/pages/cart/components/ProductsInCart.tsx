@@ -1,4 +1,4 @@
-import { Table, Image, Flex, Card, Text, Divider, Button } from '@mantine/core';
+import { Flex, Image, Table, Text } from '@mantine/core';
 import { IconMinus, IconPlus, IconX } from '@tabler/icons-react';
 import { useCart } from '../../../contexts/cart.context';
 
@@ -12,14 +12,13 @@ const ProductsInCart = () => {
 
   const rows = products.map((product) => {
     sum += product.price * product.quantity;
-
     return (
       <Table.Tr key={product._id}>
         <Table.Td w="15%">
-          <Image src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-9.png" maw={80} />
+          <Image src={product.image} fallbackSrc="/images/empty_state.png" maw={80} />
         </Table.Td>
         <Table.Td fw={700}>{product.title}</Table.Td>
-        <Table.Td w="10%">${product.price.toFixed(2)}</Table.Td>
+        <Table.Td w="10%">${product.price}</Table.Td>
         <Table.Td w="20%">
           <Flex c="gray" gap={8} align="center">
             <IconMinus size={16} onClick={() => removeFromCart(product._id)} cursor="pointer" />

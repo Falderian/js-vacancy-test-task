@@ -1,4 +1,4 @@
-import { Flex, Stack, Text } from '@mantine/core';
+import { Flex, Loader, Stack, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { useList } from '../../../resources/product/product.api';
 
@@ -13,7 +13,7 @@ const Marketplace = () => {
 
   const { min, max, search, page, perPage, sort } = query;
 
-  const { data } = useList({
+  const { data, isLoading } = useList({
     min,
     max,
     title: search,
@@ -27,7 +27,9 @@ const Marketplace = () => {
       <Filters />
       <Stack w="100%" align="center">
         <Search />
-        {data?.totalItems ? (
+        {isLoading ? (
+          <Loader />
+        ) : data?.totalItems ? (
           <>
             <ProductsList data={data.products} />
             <Stack>

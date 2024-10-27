@@ -1,4 +1,4 @@
-import { Image, Flex, Loader, Table, Text } from '@mantine/core';
+import { Flex, Image, Loader, Table, Text } from '@mantine/core';
 import { accountApi } from '../../../resources/account';
 import { useHistory } from '../../../resources/product/product.api';
 import SummaryBlock from './SummaryBlock';
@@ -24,11 +24,13 @@ const ProductsHistory = () => {
     return (
       <Table.Tr key={product._id}>
         <Table.Td w="15%">
-          <Image src="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/images/bg-9.png" maw={80} />
+          <Image src={product.image} fallbackSrc="/images/empty_state.png" maw={80} />
         </Table.Td>
         <Table.Td fw={700}>{product.title}</Table.Td>
         <Table.Td w="10%">${product.price}</Table.Td>
-        <Table.Td w="15%">{new Date(product.boughtOn).toLocaleString()}</Table.Td> {/* Display product date */}
+        <Table.Td w="10%">{product.quantity}</Table.Td>
+        <Table.Td w="10%">${product.totalPrice}</Table.Td>
+        <Table.Td w="15%">{new Date(product.boughtOn).toLocaleString()}</Table.Td>
       </Table.Tr>
     );
   });
@@ -40,6 +42,8 @@ const ProductsHistory = () => {
             <Table.Th fw={400}>Item</Table.Th>
             <Table.Th />
             <Table.Th fw={400}>Unit Price</Table.Th>
+            <Table.Th fw={400}>Quantity</Table.Th>
+            <Table.Th fw={400}>Total Price</Table.Th>
             <Table.Th fw={400}>Date</Table.Th>
           </Table.Tr>
         </Table.Thead>

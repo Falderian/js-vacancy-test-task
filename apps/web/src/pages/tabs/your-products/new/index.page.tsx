@@ -1,4 +1,5 @@
 import { Button, FileInput, Flex, Image, Stack, Text, TextInput } from '@mantine/core';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { accountApi } from '../../../../resources/account';
@@ -6,6 +7,7 @@ import { CreateProductData, useCreateProduct } from '../../../../resources/produ
 
 const NewProduct = () => {
   const { data: account } = accountApi.useGet();
+  const router = useRouter();
   const upload = useCreateProduct();
   const [imagePreview, setImagePreview] = useState<string | ArrayBuffer | null>(null);
   const { control, handleSubmit } = useForm<CreateProductData>({
@@ -21,9 +23,12 @@ const NewProduct = () => {
     formData.append('title', data.title);
     formData.append('userId', account!._id);
     formData.append('price', data.price.toString());
-    formData.append('image', data.image);
+    if (data.image) formData.append('image', data.image);
 
-    upload.mutate(formData);
+    upload
+      .mutateAsync(formData)
+      .then(() => router.push('/tabs/your-products'))
+      .catch((e) => console.warn(e));
   };
 
   return (
@@ -55,7 +60,6 @@ const NewProduct = () => {
                     setImagePreview(null);
                   }
                 }}
-                required
               />
             )}
           />
@@ -64,7 +68,13 @@ const NewProduct = () => {
           control={control}
           name="title"
           render={({ field }) => (
-            <TextInput {...field} required label="Title of the product" placeholder="Enter title of the product..." />
+            <TextInput
+              {...field}
+              required
+              label="Title of the product"
+              placeholder="Enter title of the product..."
+              error={upload.isError && upload?.error.data.errors.title}
+            />
           )}
         />
         <Controller

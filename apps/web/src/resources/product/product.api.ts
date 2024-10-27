@@ -50,6 +50,17 @@ export type CreateProductData = {
   price: number;
 };
 
+export interface IYourProduct {
+  _id: string;
+  title: string;
+  price: number;
+  userId: string;
+  totalSoldQuantity: number;
+  image: string | null;
+  status: 'On sale' | 'Sold';
+  quantity: number;
+}
+
 export type ProductsListParams = ListParams<ProductsListFilterParams, ProductsListSortParams>;
 
 export const useList = <T extends ProductsListParams>(params: T) =>
@@ -62,7 +73,7 @@ export const useCheckout = (
   userId: string,
   items: Array<{ productId: string; title: string; price: number; quantity: number }>,
 ) => {
-  return useQuery({
+  return useQuery<{ url: string }>({
     queryKey: ['checkout', items],
     queryFn: () => apiService.post('/products/checkout', items, { params: { userId } }),
     enabled: items.length > 0,
@@ -79,11 +90,27 @@ export const useHistory = (userId: string) => {
 export const useCreateProduct = () => {
   return useMutation({
     mutationFn: async (data: FormData) => {
-      const response = await apiService.post('products/new', data, {
+      const response = await apiService.post<any, { url: string }>('products/new', data, {
         headers: {
           'Content-Type': 'multipart/form-data',
         },
       });
+      return response.data;
+    },
+  });
+};
+
+export const useUserProducts = (userId: string) => {
+  return useQuery<{ products: IYourProduct[] }>({
+    queryKey: ['history', userId],
+    queryFn: () => apiService.get('products/user', { userId }),
+  });
+};
+
+export const useDeleteProduct = () => {
+  return useMutation({
+    mutationFn: async (productId: string) => {
+      const response = await apiService.delete<any, any>(`products/${productId}`);
       return response.data;
     },
   });

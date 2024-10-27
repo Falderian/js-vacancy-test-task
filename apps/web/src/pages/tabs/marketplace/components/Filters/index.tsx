@@ -1,6 +1,6 @@
-import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-import { Stack, Text, Flex, TextInput } from '@mantine/core';
+import { Flex, Stack, Text, TextInput } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
+import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
 
 import { useRouter } from 'next/router';
 
@@ -66,7 +66,15 @@ const Filters = () => {
           Price
         </Text>
         {inputs.map((input) => (
-          <TextInput key={input.name} type="number" leftSectionWidth={60} rightSection="$" fw={500} {...input} />
+          <TextInput
+            key={input.name}
+            type="number"
+            leftSectionWidth={60}
+            rightSection="$"
+            fw={500}
+            {...input}
+            w={{ sm: 150, md: 250 }}
+          />
         ))}
       </Stack>
     </Stack>

@@ -1,6 +1,5 @@
 import multer from '@koa/multer';
 import admin, { ServiceAccount } from 'firebase-admin';
-import _ from 'lodash';
 import { productSchema } from 'schemas/src/product.schema';
 import { AppKoaContext, AppRouter } from 'types';
 import serviceAccount from '../../../config/firebase.json';
@@ -11,6 +10,14 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
 async function handler(ctx: AppKoaContext) {
+  const isTitleTaken = await productService.findOne({ title: (ctx.validatedData as { title: string }).title });
+
+  if (isTitleTaken) {
+    ctx.body = { errors: { title: 'The title is already taken' } };
+    ctx.status = 409;
+    return;
+  }
+
   if (!admin.apps.length) {
     admin.initializeApp({
       credential: admin.credential.cert(serviceAccount as ServiceAccount),
@@ -20,7 +27,7 @@ async function handler(ctx: AppKoaContext) {
 
   const bucket = admin.storage().bucket();
 
-  const productData = ctx.validatedData;
+  const productData = ctx.validatedData as { image: string };
   const imageFile = ctx.request.file;
 
   if (imageFile) {
@@ -49,5 +56,5 @@ async function handler(ctx: AppKoaContext) {
 }
 
 export default (router: AppRouter) => {
-  router.post('/new', upload.single('image'), validateMiddleware(_.omit(productSchema, 'image')), handler);
+  router.post('/new', upload.single('image'), validateMiddleware(productSchema), handler);
 };

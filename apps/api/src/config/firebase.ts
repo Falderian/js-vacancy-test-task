@@ -1,14 +1,23 @@
 import admin, { ServiceAccount } from 'firebase-admin';
-import serviceAccount from './firebase.json';
-console.log(admin.apps.length);
+
 if (!admin.apps.length) {
-  admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount as ServiceAccount),
-    storageBucket: process.env.FIREBASE_STORAGE_URL,
-  });
+  try {
+    const serviceAccount = JSON.parse(process.env.FIREBASE_CREDS!);
+    admin.initializeApp({
+      credential: admin.credential.cert(serviceAccount as ServiceAccount),
+      storageBucket: process.env.FIREBASE_STORAGE_URL,
+    });
+    console.log('Firebase Admin initialized successfully.');
+  } catch (error) {
+    console.error('Error initializing Firebase Admin:', error);
+  }
 }
 
-console.log(process.env.FIREBASE_STORAGE_URL);
-
 const bucket = admin.storage().bucket();
+if (!bucket) {
+  console.error('Bucket is undefined.');
+} else {
+  console.log('Bucket initialized:', bucket.name);
+}
+
 export { bucket };

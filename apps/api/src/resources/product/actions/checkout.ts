@@ -1,6 +1,6 @@
-import { AppKoaContext, AppRouter } from 'types';
-import Stripe from 'stripe';
 import { boughtProductsSchema } from 'schemas/src/purchase.schema';
+import Stripe from 'stripe';
+import { AppKoaContext, AppRouter } from 'types';
 import { z } from 'zod';
 import boughtProductsService from '../boughtProducts.service';
 
@@ -27,10 +27,10 @@ const checkout = async (ctx: AppKoaContext<BoughtItemParams[]>) => {
       payment_method_types: ['card'],
       line_items: lineItems,
       mode: 'payment',
-      success_url: `${process.env.API_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.API_URL}/cancel`,
+      success_url: `${process.env.WEB_URL}/checkout/success`,
+      cancel_url: `${process.env.WEB_URL}/checkout/error`,
     });
-
+    console.log(items);
     await boughtProductsService.saveBoughtItems(userId as string, items);
 
     ctx.body = { url: session.url };

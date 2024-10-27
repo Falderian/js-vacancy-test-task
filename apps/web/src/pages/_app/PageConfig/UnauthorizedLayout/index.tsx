@@ -1,5 +1,5 @@
-import React, { FC, ReactElement } from 'react';
 import { Center, Image, SimpleGrid, Stack } from '@mantine/core';
+import { FC, ReactElement } from 'react';
 
 interface UnauthorizedLayoutProps {
   children: ReactElement;
@@ -11,8 +11,8 @@ const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = ({ children }) => (
       {children}
     </Center>
 
-    <Stack p={8} mah="100vh" maw="50vw" justify="center">
-      <Image src="/images/ship.svg" alt="Image alt" />
+    <Stack p={8} align="flex-end" justify="center">
+      <Image src="/images/ship.svg" alt="Image alt" style={{ maxWidth: '100%', height: 'auto' }} />
     </Stack>
   </SimpleGrid>
 );

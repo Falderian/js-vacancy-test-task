@@ -1,3 +1,8 @@
-import Marketplace from './tabs/marketplace/index.page';
+import { useRouter } from 'next/router';
 
-export default Marketplace;
+const Home = () => {
+  const router = useRouter();
+  router.push('tabs/marketplace');
+};
+
+export default Home;

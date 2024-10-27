@@ -1,22 +1,19 @@
-import React, { useEffect, useState } from 'react';
+import { Anchor, Button, Flex, Group, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { Anchor, Button, Flex, Group, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 
 import { accountApi } from 'resources/account';
 
-import { GoogleIcon } from 'public/icons';
-
 import { handleApiError } from 'utils';
 
-import { RoutePath } from 'routes';
 import config from 'config';
+import { RoutePath } from 'routes';
 
-import { SignUpParams } from 'types';
 import { IconCircleCheck } from '@tabler/icons-react';
+import { SignUpParams } from 'types';
 
 type SignUpResponse = { signupToken?: string };
 
@@ -100,7 +97,6 @@ const SignUp: NextPage = () => {
 
           {signupToken && (
             <Stack gap={0}>
-              <Text>You look like a cool developer.</Text>
               <Anchor size="sm" href={`${config.API_URL}/account/verify-email?token=${signupToken}`} target="_blank">
                 Verify email
               </Anchor>

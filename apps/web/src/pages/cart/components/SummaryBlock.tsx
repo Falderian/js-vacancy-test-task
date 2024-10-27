@@ -1,4 +1,4 @@
-import { Card, Divider, Flex, Button, Text } from '@mantine/core';
+import { Button, Card, Divider, Flex, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 
 type Props = {

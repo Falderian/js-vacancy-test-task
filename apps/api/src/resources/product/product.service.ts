@@ -1,10 +1,11 @@
-import db from 'db';
+import { ObjectId } from '@paralect/node-mongo';
 import { DATABASE_DOCUMENTS } from 'app-constants';
-import { productSchema } from 'schemas/src/product.schema';
 import { Product } from 'app-types/src/product.types';
+import db from 'db';
 import _ from 'lodash';
+import { productSchema } from 'schemas/src/product.schema';
 
-const productService = db.createService<Product>(DATABASE_DOCUMENTS.PRODUCTS, {
+export const productService = db.createService<Product>(DATABASE_DOCUMENTS.PRODUCTS, {
   schemaValidator: (obj) => productSchema.parseAsync(obj),
 });
 
@@ -21,7 +22,72 @@ const findProducts = async (filterOptions: Record<string, any>, page: number, pe
   return { results, totalItems };
 };
 
+const findById = async (id: string) => {
+  try {
+    const _id = new ObjectId(id);
+    const product = await productService.findOne({ _id });
+
+    if (!product) throw new Error('Product not found');
+
+    return product;
+  } catch (error) {
+    console.error('Error fetching product by ID:', error);
+    throw new Error('Could not fetch product');
+  }
+};
+
+const findUserProducts = async (userId: string) => {
+  const productsWithStatus = await productService.aggregate([
+    {
+      $match: { userId },
+    },
+    {
+      $lookup: {
+        from: 'bought_products',
+        let: { productId: { $toString: '$_id' } },
+        pipeline: [
+          {
+            $match: {
+              $expr: { $eq: ['$productId', '$$productId'] },
+            },
+          },
+        ],
+        as: 'boughtDetails',
+      },
+    },
+    {
+      $addFields: {
+        totalSoldQuantity: { $sum: '$boughtDetails.quantity' },
+        totalRevenue: { $sum: '$boughtDetails.totalPrice' },
+        hasSales: { $gt: [{ $size: '$boughtDetails' }, 0] },
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        title: 1,
+        price: 1,
+        userId: 1,
+        image: { $ifNull: ['$image', null] },
+        totalSoldQuantity: 1,
+        totalRevenue: 1,
+        status: {
+          $cond: {
+            if: { $gt: ['$totalSoldQuantity', 0] },
+            then: 'Sold',
+            else: 'On sale',
+          },
+        },
+      },
+    },
+  ]);
+
+  return productsWithStatus;
+};
+
 export default Object.assign(productService, {
   getPublic,
+  findById,
   findProducts,
+  findUserProducts,
 });

@@ -6,6 +6,7 @@ export const productSchema = z
     price: z.string().min(0, 'Price must be a positive number'),
     image: z.string().url('Image must be a valid URL').optional(),
     userId: z.string().min(1, 'User ID is required'),
+    createdOn: z.date().default(new Date()),
   })
   .strip();
 

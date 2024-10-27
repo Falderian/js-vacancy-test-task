@@ -16,6 +16,8 @@ export enum RoutePath {
   TabsYourProducts = '/tabs/your-products',
   Cart = '/cart',
   Checkout = '/checkout',
+  CheckoutSuccess = '/checkout/success',
+  CheckoutError = '/checkout/error',
   TabsYourProductsNew = '/tabs/your-products/new',
 
   // Auth paths
@@ -62,6 +64,14 @@ export const routesConfiguration: RoutesConfiguration = {
     layout: LayoutType.MAIN,
   },
   [RoutePath.Checkout]: {
+    scope: ScopeType.PRIVATE,
+    layout: LayoutType.MAIN,
+  },
+  [RoutePath.CheckoutSuccess]: {
+    scope: ScopeType.PRIVATE,
+    layout: LayoutType.MAIN,
+  },
+  [RoutePath.CheckoutError]: {
     scope: ScopeType.PRIVATE,
     layout: LayoutType.MAIN,
   },

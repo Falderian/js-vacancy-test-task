@@ -1,7 +1,7 @@
-import { AppKoaContext, AppRouter } from 'types';
-import productService from '../product.service';
 import { validateMiddleware } from 'middlewares';
 import { PaginationParams, productsPaginationSchema } from 'schemas/src/product.schema';
+import { AppKoaContext, AppRouter } from 'types';
+import productService from '../product.service';
 
 const list = async (ctx: AppKoaContext<PaginationParams>) => {
   const { page, sort } = ctx.validatedData;
@@ -19,10 +19,10 @@ const list = async (ctx: AppKoaContext<PaginationParams>) => {
 
   switch (sort) {
     case 'newest':
-      sortOptions.created = -1;
+      sortOptions.createdOn = -1;
       break;
     case 'oldest':
-      sortOptions.created = 1;
+      sortOptions.createdOn = 1;
       break;
     case 'cheap':
       sortOptions.price = 1;
