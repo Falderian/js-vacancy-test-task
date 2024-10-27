@@ -1,13 +1,13 @@
 import { DATABASE_DOCUMENTS } from 'app-constants';
 import db from 'db';
-import { boughtProductsSchema } from 'schemas/src/purchase.schema';
+import { purchasedProductSchema } from 'schemas/src/purchasedProduct.schema';
+
 import z from 'zod';
 
-type BoughtProduct = z.infer<typeof boughtProductsSchema>;
+type BoughtProduct = z.infer<typeof purchasedProductSchema>;
 const boughtItemsService = db.createService(DATABASE_DOCUMENTS.BOUGHT_PRODUCTS);
 
-const saveBoughtItems = async (userId: string, items: BoughtProduct[]) => {
-  console.log(items[0]);
+const purchaseItems = async (userId: string, items: BoughtProduct[]) => {
   const boughtItemsData = items.map((item) => ({
     userId,
     productId: item.productId,
@@ -15,7 +15,6 @@ const saveBoughtItems = async (userId: string, items: BoughtProduct[]) => {
     price: item.price,
     quantity: item.quantity,
     totalPrice: item.totalPrice,
-    boughtOn: new Date(item.boughtOn),
     image: item.image,
   }));
 
@@ -29,8 +28,8 @@ const saveBoughtItems = async (userId: string, items: BoughtProduct[]) => {
 
 const getUserPurchasedItems = async (userId: string) => {
   try {
-    const purchasedItems = await boughtItemsService.find({ userId }, undefined, { sort: { boughtOn: 'desc' } });
-    console.log(purchasedItems);
+    const purchasedItems = await boughtItemsService.find({ userId }, undefined, { sort: { createdOn: 'desc' } });
+
     return purchasedItems;
   } catch (error) {
     console.error('Error retrieving purchased items:', error);
@@ -39,6 +38,6 @@ const getUserPurchasedItems = async (userId: string) => {
 };
 
 export default {
-  saveBoughtItems,
+  purchaseItems,
   getUserPurchasedItems,
 };

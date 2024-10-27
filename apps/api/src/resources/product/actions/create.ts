@@ -2,7 +2,7 @@ import multer from '@koa/multer';
 import admin, { ServiceAccount } from 'firebase-admin';
 import { productSchema } from 'schemas/src/product.schema';
 import { AppKoaContext, AppRouter } from 'types';
-import serviceAccount from '../../../config/firebase.json';
+
 import { validateMiddleware } from '../../../middlewares';
 import productService from '../product.service';
 
@@ -20,7 +20,7 @@ async function handler(ctx: AppKoaContext) {
 
   if (!admin.apps.length) {
     admin.initializeApp({
-      credential: admin.credential.cert(serviceAccount as ServiceAccount),
+      credential: admin.credential.cert(JSON.parse(process.env.FIREBASE_CREDS!) as ServiceAccount),
       storageBucket: process.env.FIREBASE_STORAGE_URL,
     });
   }

@@ -1,6 +1,6 @@
 import { AppKoaContext, AppRouter } from '../../../types';
 import { userService } from '../../user';
-import boughtProductsService from '../boughtProducts.service';
+import boughtProductsService from '../purchasedProduct.service';
 
 const getUserPurchasedProducts = async (ctx: AppKoaContext<{ userId: string }>) => {
   const { userId } = ctx.query;

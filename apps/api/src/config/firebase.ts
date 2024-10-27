@@ -7,7 +7,6 @@ if (!admin.apps.length) {
       credential: admin.credential.cert(serviceAccount as ServiceAccount),
       storageBucket: process.env.FIREBASE_STORAGE_URL,
     });
-    console.log('Firebase Admin initialized successfully.');
   } catch (error) {
     console.error('Error initializing Firebase Admin:', error);
   }

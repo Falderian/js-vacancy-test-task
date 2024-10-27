@@ -4,7 +4,7 @@ import { EMAIL_REGEX } from 'app-constants';
 
 import { emailSchema, passwordSchema } from './common.schema';
 import dbSchema from './db.schema';
-import { boughtProductsSchema } from './purchase.schema';
+import { purchasedProductSchema } from './purchasedProduct.schema';
 
 export const userSchema = dbSchema
   .extend({
@@ -55,5 +55,5 @@ export const updateUserSchema = z
   .partial();
 
 export const extendedUserSchema = userSchema.extend({
-  purchaseHistory: boughtProductsSchema.optional(),
+  purchaseHistory: purchasedProductSchema.optional(),
 });
