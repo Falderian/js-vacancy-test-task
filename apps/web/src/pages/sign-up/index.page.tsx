@@ -63,21 +63,18 @@ const SignUp: NextPage = () => {
   const { mutate: signUp, isPending: isSignUpPending } = accountApi.useSignUp();
 
   const onSubmit = (data: SignUpParams) => {
-    signUp(
-      { ...data, firstName: '', lastName: '' },
-      {
-        onSuccess: (response: SignUpResponse) => {
-          if (response.signupToken) setSignupToken(response.signupToken);
+    signUp(data, {
+      onSuccess: (response: SignUpResponse) => {
+        if (response.signupToken) setSignupToken(response.signupToken);
 
-          setRegistered(true);
-          setEmail(data.email);
-        },
-        onError: (e) => {
-          console.log(e);
-          return handleApiError(e, setError);
-        },
+        setRegistered(true);
+        setEmail(data.email);
       },
-    );
+      onError: (e) => {
+        console.log(e);
+        return handleApiError(e, setError);
+      },
+    });
   };
 
   if (registered) {

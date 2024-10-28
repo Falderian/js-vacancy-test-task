@@ -13,8 +13,8 @@ export const setUser = (user: User | undefined) => {
 
   if (user) {
     mixpanel.people.set({
-      firstName: user.firstName,
-      lastName: user.lastName,
+      firstName: 'User',
+      lastName: 'Last name',
     });
   }
 };

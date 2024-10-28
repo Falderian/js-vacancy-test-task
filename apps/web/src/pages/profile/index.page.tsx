@@ -30,8 +30,6 @@ const Profile: NextPage = () => {
   } = useForm<UpdateUserParams>({
     resolver: zodResolver(updateUserSchema),
     defaultValues: {
-      firstName: account?.firstName,
-      lastName: account?.lastName,
       password: '',
     },
   });
@@ -49,7 +47,7 @@ const Profile: NextPage = () => {
           color: 'green',
         });
 
-        reset(data, { keepDirtyValues: true });
+        reset(data as any, { keepDirtyValues: true });
         setValue('password', '');
       },
       onError: (e) => handleApiError(e, setError),
@@ -69,20 +67,6 @@ const Profile: NextPage = () => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Stack gap={32}>
             <Stack gap={20}>
-              <TextInput
-                {...register('firstName')}
-                label="Enter first name"
-                placeholder="First Name"
-                error={errors.firstName?.message}
-              />
-
-              <TextInput
-                {...register('lastName')}
-                label="Last Name"
-                placeholder="Enter last name"
-                error={errors.lastName?.message}
-              />
-
               <TextInput label="Email Address" value={account?.email} disabled />
 
               <PasswordInput

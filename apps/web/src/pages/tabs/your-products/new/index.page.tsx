@@ -73,7 +73,7 @@ const NewProduct = () => {
               required
               label="Title of the product"
               placeholder="Enter title of the product..."
-              error={upload.isError && upload?.error.data.errors.title}
+              error={upload.isError && (upload?.error as any).data.errors.title}
             />
           )}
         />

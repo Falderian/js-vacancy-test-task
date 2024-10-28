@@ -1,9 +1,10 @@
 import { Flex, Pill, Stack, Text } from '@mantine/core';
 import { useRouter } from 'next/router';
 import { useCallback } from 'react';
-import { IProduct } from '../../../resources/product/product.api';
+
 import ProductCard from './ProductCard';
 import ProductsSortMenu from './ProductsSortMenu';
+import { IProduct } from '../../../../resources/product/product.api';
 
 type Props = {
   data: {

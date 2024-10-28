@@ -7,17 +7,11 @@ import { accountApi } from 'resources/account';
 
 import { RoutePath } from 'routes';
 
-import MenuToggle from '../MenuToggle';
-
 const UserMenu: FC = () => {
   const { mutate: signOut } = accountApi.useSignOut();
 
   return (
     <Menu position="bottom-end">
-      <Menu.Target>
-        <MenuToggle />
-      </Menu.Target>
-
       <Menu.Dropdown>
         <Menu.Item component={Link} href={RoutePath.Profile} leftSection={<IconUserCircle size={16} />}>
           Profile settings

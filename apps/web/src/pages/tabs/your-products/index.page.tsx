@@ -10,7 +10,7 @@ const YourProducts = () => {
   const { push } = useRouter();
   const { data: account } = accountApi.useGet();
 
-  const { data, refetch, isLoading } = useUserProducts(account?._id);
+  const { data, refetch, isLoading } = useUserProducts(account?._id || '');
 
   const handleNewProductClick = () => push('your-products/new');
 

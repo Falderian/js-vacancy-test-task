@@ -5,7 +5,7 @@ import db from 'db';
 import _ from 'lodash';
 import { productSchema } from 'schemas/src/product.schema';
 
-export const productService = db.createService<Product>(DATABASE_DOCUMENTS.PRODUCTS, {
+export const productService = db.createService<Product & any>(DATABASE_DOCUMENTS.PRODUCTS, {
   schemaValidator: (obj) => productSchema.parseAsync(obj),
 });
 

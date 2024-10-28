@@ -1,5 +1,5 @@
 import { Text } from '@react-email/components';
-import { FC } from 'react';
+import React, { FC } from 'react';
 
 import Button from './_components/button';
 import Layout from './_layout';

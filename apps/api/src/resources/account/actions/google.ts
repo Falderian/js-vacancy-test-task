@@ -27,13 +27,6 @@ const signInGoogleWithCode = async (ctx: AppKoaContext) => {
   let userChanged;
 
   if (user) {
-    if (!user.oauth?.google) {
-      userChanged = await userService.updateOne({ _id: user._id }, (old) => ({
-        ...old,
-        oauth: { google: true },
-      }));
-    }
-
     const userUpdated = userChanged || user;
 
     await Promise.all([userService.updateLastRequest(userUpdated._id), authService.setTokens(ctx, userUpdated._id)]);
@@ -47,15 +40,10 @@ const signInGoogleWithCode = async (ctx: AppKoaContext) => {
   const fullName = lastName ? `${firstName} ${lastName}` : firstName;
 
   const newUser = await userService.insertOne({
-    firstName,
-    lastName,
     fullName,
     email,
     isEmailVerified: true,
     avatarUrl,
-    oauth: {
-      google: true,
-    },
   });
 
   if (newUser) {
