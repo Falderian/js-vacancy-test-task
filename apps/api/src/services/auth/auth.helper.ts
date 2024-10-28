@@ -18,10 +18,14 @@ export const setTokenCookies = ({ ctx, accessToken }: { ctx: AppKoaContext; acce
   const cookiesDomain = parsed.domain || undefined;
   console.log('parsed', parsed);
   console.log('cookiesDomain', cookiesDomain);
+  console.log('Cookie set:', ctx.cookies.get(COOKIES.ACCESS_TOKEN));
+
   ctx.cookies.set(COOKIES.ACCESS_TOKEN, accessToken, {
     httpOnly: true,
     domain: cookiesDomain,
     expires: new Date(Date.now() + TOKEN_SECURITY_EXPIRES_IN * 1000),
+    sameSite: 'none',
+    secure: true,
   });
 };
 
