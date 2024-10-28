@@ -11,7 +11,6 @@ import { accountApi } from 'resources/account';
 import { handleApiError } from 'utils';
 
 import { RoutePath } from 'routes';
-import config from 'config';
 
 import { SignUpParams } from 'types';
 import { useRouter } from 'next/router';
