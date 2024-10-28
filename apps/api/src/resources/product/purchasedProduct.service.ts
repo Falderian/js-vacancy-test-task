@@ -1,8 +1,9 @@
-import { DATABASE_DOCUMENTS } from 'app-constants';
-import db from 'db';
-import { purchasedProductSchema } from 'schemas/src/purchasedProduct.schema';
-
 import z from 'zod';
+
+import db from 'db';
+
+import { DATABASE_DOCUMENTS } from 'app-constants';
+import { purchasedProductSchema } from 'schemas/src/purchasedProduct.schema';
 
 type BoughtProduct = z.infer<typeof purchasedProductSchema>;
 const boughtItemsService = db.createService(DATABASE_DOCUMENTS.BOUGHT_PRODUCTS);

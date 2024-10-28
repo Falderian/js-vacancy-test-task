@@ -1,5 +1,7 @@
-import { AppKoaContext, AppRouter } from '../../../types';
-import { userService } from '../../user';
+import { userService } from 'resources/user';
+
+import { AppKoaContext, AppRouter } from 'types';
+
 import boughtProductsService from '../purchasedProduct.service';
 
 const getUserPurchasedProducts = async (ctx: AppKoaContext<{ userId: string }>) => {

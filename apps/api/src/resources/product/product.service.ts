@@ -1,9 +1,13 @@
 import { ObjectId } from '@paralect/node-mongo';
-import { DATABASE_DOCUMENTS } from 'app-constants';
-import { Product } from 'app-types/src/product.types';
-import db from 'db';
 import _ from 'lodash';
+import z from 'zod';
+
+import db from 'db';
+
+import { DATABASE_DOCUMENTS } from 'app-constants';
 import { productSchema } from 'schemas/src/product.schema';
+
+export type Product = z.infer<typeof productSchema>;
 
 export const productService = db.createService<Product & any>(DATABASE_DOCUMENTS.PRODUCTS, {
   schemaValidator: (obj) => productSchema.parseAsync(obj),

@@ -5,5 +5,8 @@
     "baseUrl": "src",
     "jsx": "react" // for using Mailer
   },
-  "include": ["**/*.ts", "**/*.json"]
+  "include": [
+    "**/*.ts",
+    "**/*.json"
+  ]
 }

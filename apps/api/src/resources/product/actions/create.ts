@@ -1,9 +1,11 @@
 import multer from '@koa/multer';
 import admin, { ServiceAccount } from 'firebase-admin';
+
+import { validateMiddleware } from 'middlewares';
+
 import { productSchema } from 'schemas/src/product.schema';
 import { AppKoaContext, AppRouter } from 'types';
 
-import { validateMiddleware } from '../../../middlewares';
 import productService from '../product.service';
 
 const storage = multer.memoryStorage();
@@ -41,10 +43,7 @@ async function handler(ctx: AppKoaContext) {
 
       const fileUrl = `https://storage.googleapis.com/${bucket.name}/${fileName}`;
       productData.image = fileUrl;
-
-      console.log('File uploaded successfully:', fileUrl);
     } catch (error) {
-      console.error('Error uploading file:', error);
       ctx.status = 500;
       ctx.body = { error: 'Error uploading file to Firebase.' };
       return;

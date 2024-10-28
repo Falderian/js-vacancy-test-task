@@ -24,7 +24,7 @@ const privateFields = ['passwordHash', 'signupToken', 'resetPasswordToken'];
 
 const getPublic = (user: User | null) => _.omit(user, privateFields);
 
-const findUser = async (userId: string) => await service.findOne({ _id: userId });
+const findUser = async (userId: string) => service.findOne({ _id: userId });
 
 export default Object.assign(service, {
   updateLastRequest,

@@ -1,7 +1,9 @@
-import { purchasedProductSchema } from 'schemas/src/purchasedProduct.schema';
 import Stripe from 'stripe';
-import { AppKoaContext, AppRouter } from 'types';
 import { z } from 'zod';
+
+import { purchasedProductSchema } from 'schemas/src/purchasedProduct.schema';
+import { AppKoaContext, AppRouter } from 'types';
+
 import purchasedProductsService from '../purchasedProduct.service';
 
 const stripe = new Stripe(process.env.STRIPE_KEY || '');

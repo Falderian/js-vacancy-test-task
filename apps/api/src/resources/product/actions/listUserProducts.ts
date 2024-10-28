@@ -1,4 +1,5 @@
 import { AppKoaContext, AppRouter } from 'types';
+
 import productService from '../product.service';
 
 const userProducts = async (ctx: AppKoaContext<{ userId: string }>) => {

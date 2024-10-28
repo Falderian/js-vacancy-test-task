@@ -1,5 +1,5 @@
 import React, { FC, ReactElement } from 'react';
-import { Center, Image, Flex, Box } from '@mantine/core';
+import { Box,Center, Flex, Image } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 
 interface UnauthorizedLayoutProps {

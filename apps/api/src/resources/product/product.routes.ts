@@ -1,4 +1,5 @@
-import { routeUtil } from '../../utils';
+import { routeUtil } from 'utils';
+
 import checkout from './actions/checkout';
 import create from './actions/create';
 import deleteProduct from './actions/deleteProduct';

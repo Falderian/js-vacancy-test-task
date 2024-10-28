@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Card, Flex, Loader, LoadingOverlay, Stack, Text, useMantineTheme } from '@mantine/core';
+import { Card, Flex, LoadingOverlay, Stack, Text, useMantineTheme } from '@mantine/core';
 import { IconCirclePlusFilled } from '@tabler/icons-react';
 
 import { accountApi } from 'resources/account';

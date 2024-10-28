@@ -13,10 +13,5 @@ if (!admin.apps.length) {
 }
 
 const bucket = admin.storage().bucket();
-if (!bucket) {
-  console.error('Bucket is undefined.');
-} else {
-  console.log('Bucket initialized:', bucket.name);
-}
 
 export { bucket };

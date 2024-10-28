@@ -1,6 +1,8 @@
 import { validateMiddleware } from 'middlewares';
+
 import { PaginationParams, productsPaginationSchema } from 'schemas/src/product.schema';
 import { AppKoaContext, AppRouter } from 'types';
+
 import productService from '../product.service';
 
 const list = async (ctx: AppKoaContext<PaginationParams>) => {
@@ -29,6 +31,8 @@ const list = async (ctx: AppKoaContext<PaginationParams>) => {
       break;
     case 'expensive':
       sortOptions.price = -1;
+      break;
+    default:
       break;
   }
 

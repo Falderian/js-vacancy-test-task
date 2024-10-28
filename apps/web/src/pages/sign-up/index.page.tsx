@@ -15,8 +15,6 @@ import { RoutePath } from 'routes';
 
 import { SignUpParams } from 'types';
 
-type SignUpResponse = { signupToken?: string };
-
 const passwordRules = [
   {
     title: 'Must be at least 8 characters',
@@ -35,7 +33,6 @@ const passwordRules = [
 const SignUp: NextPage = () => {
   const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
-  const [signupToken, setSignupToken] = useState<string | null>(null);
   const [registered, setRegistered] = useState(false);
 
   const [passwordRulesData, setPasswordRulesData] = useState(passwordRules);
@@ -67,9 +64,7 @@ const SignUp: NextPage = () => {
 
   const onSubmit = (data: SignUpParams) => {
     signUp(data, {
-      onSuccess: (response: SignUpResponse) => {
-        if (response.signupToken) setSignupToken(response.signupToken);
-
+      onSuccess: () => {
         setRegistered(true);
         setEmail(data.email);
         setTimeout(() => router.push('/sign-in'), 2000);

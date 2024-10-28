@@ -1,5 +1,7 @@
 import { ObjectId } from '@paralect/node-mongo';
+
 import { AppKoaContext, AppRouter } from 'types';
+
 import productService from '../product.service';
 
 async function deleteProductHandler(ctx: AppKoaContext) {

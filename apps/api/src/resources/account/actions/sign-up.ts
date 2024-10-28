@@ -1,7 +1,7 @@
 import { userService } from 'resources/user';
 
 import { validateMiddleware } from 'middlewares';
-import { analyticsService, emailService } from 'services';
+import { emailService } from 'services';
 import { securityUtil } from 'utils';
 
 import config from 'config';
