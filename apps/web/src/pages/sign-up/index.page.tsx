@@ -72,6 +72,7 @@ const SignUp: NextPage = () => {
 
         setRegistered(true);
         setEmail(data.email);
+        setTimeout(() => router.push('/sign-in'), 2000);
       },
       onError: (e) => handleApiError(e, setError),
     });
@@ -89,16 +90,8 @@ const SignUp: NextPage = () => {
 
           <Text size="md" c="gray.6">
             Your account has been registered, <b>{email}</b>. <br />
-            Please, Sign in.
+            Wait for redirect to Sign In.
           </Text>
-
-          {signupToken && (
-            <Stack gap={0}>
-              <Button onClick={() => router.push('/sign-in')} w="fit-content" style={{ alignSelf: 'center' }}>
-                Login
-              </Button>
-            </Stack>
-          )}
         </Stack>
       </>
     );

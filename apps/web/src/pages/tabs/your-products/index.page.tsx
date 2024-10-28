@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { Card, Flex, Loader, Stack, Text, useMantineTheme } from '@mantine/core';
+import { Card, Flex, Loader, LoadingOverlay, Stack, Text, useMantineTheme } from '@mantine/core';
 import { IconCirclePlusFilled } from '@tabler/icons-react';
 
 import { accountApi } from 'resources/account';
@@ -22,27 +22,22 @@ const YourProducts = () => {
       <Text size="lg" fw={600}>
         Your products
       </Text>
-      {isLoading ? (
-        <Stack align="center" p={20}>
-          <Loader />
-        </Stack>
-      ) : (
-        <Flex wrap="wrap" gap={20}>
-          <Card
-            miw={230}
-            mih={300}
-            style={{ alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
-            onClick={handleNewProductClick}
-          >
-            <IconCirclePlusFilled color={theme.colors.blue[6]} size={40} />
-            <Text fw={400} size="lg" c={theme.colors.blue[6]}>
-              New Product
-            </Text>
-          </Card>
-          {data?.products &&
-            data.products.map((product) => <YourProductCard key={product._id} product={product} refetch={refetch} />)}
-        </Flex>
-      )}
+      <LoadingOverlay visible={isLoading} />
+      <Flex wrap="wrap" gap={20}>
+        <Card
+          miw={230}
+          mih={300}
+          style={{ alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          onClick={handleNewProductClick}
+        >
+          <IconCirclePlusFilled color={theme.colors.blue[6]} size={40} />
+          <Text fw={400} size="lg" c={theme.colors.blue[6]}>
+            New Product
+          </Text>
+        </Card>
+        {data?.products &&
+          data.products.map((product) => <YourProductCard key={product._id} product={product} refetch={refetch} />)}
+      </Flex>
     </Stack>
   );
 };

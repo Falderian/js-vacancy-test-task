@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, Chip, Container, Flex, Image, Indicator, Text } from '@mantine/core';
+import { Card, Chip, Container, Flex, Image, Indicator, LoadingOverlay, Stack, Text } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
 
@@ -28,8 +28,9 @@ const YourProductCard = ({ product, refetch }: Props) => {
   const handleClick = () => deleteMutation.mutateAsync(product._id).then(refetch);
 
   return (
-    <Card style={{ gap: 12, alignItems: 'space-around' }} w={230}>
-      <Container p={0} m={0}>
+    <Card style={{ gap: 12, alignItems: 'space-between' }} w={230}>
+      <LoadingOverlay visible={deleteMutation.isPending} />
+      <Container p={0} m={0} style={{ position: 'relative' }}>
         <Indicator
           label={
             <Flex py={5} h="100%" align="center" style={{ cursor: 'pointer' }} onClick={handleClick}>
@@ -53,23 +54,25 @@ const YourProductCard = ({ product, refetch }: Props) => {
           }}
           style={{
             position: 'absolute',
-            bottom: '38%',
-            right: '10%',
+            bottom: '5%',
+            right: '5%',
             borderRadius: 12,
           }}
         >
           {statusBadge.text}
         </Chip>
       </Container>
-      <Text size="lg" fw={700}>
-        {product.title}
-      </Text>
-      <Flex justify="space-between">
-        <Text color="grey" size="sm">
-          Price:
+      <Stack p={0}>
+        <Text size="lg" fw={700}>
+          {product.title}
         </Text>
-        <Text fw={700}>${product.price}</Text>
-      </Flex>
+        <Flex justify="space-between">
+          <Text color="grey" size="sm">
+            Price:
+          </Text>
+          <Text fw={700}>${product.price}</Text>
+        </Flex>
+      </Stack>
     </Card>
   );
 };

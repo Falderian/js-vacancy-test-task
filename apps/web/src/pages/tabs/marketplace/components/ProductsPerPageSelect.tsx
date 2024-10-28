@@ -16,7 +16,7 @@ const ProductsPerPageSelect = () => {
     <Select
       checkIconPosition="right"
       label="Per page"
-      data={['5', '10', '15'].map((value) => ({
+      data={['6', '12', '18'].map((value) => ({
         value,
         label: value,
         disabled: value === selectedValue,

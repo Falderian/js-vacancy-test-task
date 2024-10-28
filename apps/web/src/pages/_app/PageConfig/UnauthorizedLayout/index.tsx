@@ -1,20 +1,46 @@
 import React, { FC, ReactElement } from 'react';
-import { Center, Image, SimpleGrid, Stack } from '@mantine/core';
+import { Center, Image, Flex, Box } from '@mantine/core';
+import { useMediaQuery } from '@mantine/hooks';
 
 interface UnauthorizedLayoutProps {
   children: ReactElement;
 }
 
-const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = ({ children }) => (
-  <SimpleGrid cols={{ base: 1, sm: 2 }} spacing="sm">
-    <Center component="main" h="100vh" w="100%" px={32}>
-      {children}
-    </Center>
+const UnauthorizedLayout: FC<UnauthorizedLayoutProps> = ({ children }) => {
+  const matches = useMediaQuery('(min-width: 768px)');
 
-    <Stack p={8} align="flex-end" justify="center">
-      <Image src="/images/ship.svg" alt="Image alt" style={{ maxWidth: '100%', height: 'auto' }} />
-    </Stack>
-  </SimpleGrid>
-);
+  return (
+    <Flex style={{ height: '100vh', overflow: 'hidden' }} direction={{ base: 'column', sm: 'row' }}>
+      <Box style={{ flex: 1, display: 'flex', justifyContent: 'center', alignItems: 'center', padding: '0 32px' }}>
+        <Center component="main" style={{ width: '100%' }}>
+          {children}
+        </Center>
+      </Box>
+
+      {matches && (
+        <Box
+          style={{
+            flex: 1,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+          }}
+        >
+          <Image
+            src="/images/ship.svg"
+            alt="The Shopy Store Image"
+            style={{
+              maxHeight: '100%',
+              width: 'auto',
+              maxWidth: '100%',
+              objectFit: 'contain',
+            }}
+          />
+        </Box>
+      )}
+    </Flex>
+  );
+};
 
 export default UnauthorizedLayout;

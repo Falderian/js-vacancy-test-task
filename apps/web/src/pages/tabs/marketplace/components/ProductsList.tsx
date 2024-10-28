@@ -34,6 +34,7 @@ const ProductsList = ({ data }: Props) => {
       const newQuery = { ...query };
       delete newQuery.min;
       delete newQuery.max;
+      delete newQuery.search;
       router.push({ query: newQuery }, undefined, { shallow: true });
     };
 

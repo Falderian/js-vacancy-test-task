@@ -23,6 +23,9 @@ const Filters = () => {
   const resetFilters = useCallback(() => {
     setMin('');
     setMax('');
+    const newQuery = { ...query };
+    delete newQuery.search;
+    router.push({ query: { ...newQuery, page: 1 } }, undefined, { shallow: true });
   }, []);
 
   useEffect(() => {

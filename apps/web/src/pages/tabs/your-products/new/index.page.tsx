@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { Button, FileInput, Flex, Image, Stack, Text, TextInput } from '@mantine/core';
+import { Button, FileInput, Flex, Image, LoadingOverlay, Stack, Text, TextInput } from '@mantine/core';
 import { Controller, useForm } from 'react-hook-form';
 
 import { accountApi } from 'resources/account';
@@ -33,16 +33,17 @@ const NewProduct = () => {
   };
 
   return (
-    <Stack maw="50%">
+    <Stack w="50%" maw={500}>
       <Text size="lg" fw={600}>
         Create new product
       </Text>
+      <LoadingOverlay visible={upload.isPending} />
       <form onSubmit={handleSubmit(submit)} style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
         <Flex gap={10} align="center">
           {imagePreview ? (
-            <Image src={imagePreview as string} alt="Image preview" w={180} h={180} />
+            <Image src={imagePreview as string} alt="Image preview" maw={230} mah={230} />
           ) : (
-            <Image src="/images/default_image.svg" alt="Default" w={180} h={180} />
+            <Image src="/images/default_image.svg" alt="Default" maw={230} mah={230} />
           )}
 
           <Controller

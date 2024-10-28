@@ -11,11 +11,18 @@ const Search = () => {
   useEffect(() => {
     const newQuery = { ...query };
 
-    if (search) newQuery.search = search;
-    else delete newQuery.search;
+    if (search) {
+      newQuery.search = search;
+    } else {
+      delete newQuery.search;
+    }
 
     router.push({ query: { ...newQuery, page: 1 } }, undefined, { shallow: true });
   }, [search]);
+
+  useEffect(() => {
+    setSearch(query.search || '');
+  }, [query.search]);
 
   return (
     <TextInput
