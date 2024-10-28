@@ -30,7 +30,7 @@ import { AppKoa } from 'types';
 const initKoa = () => {
   const app = new AppKoa();
 
-  app.use(cors({ origin: 'https://js-vacancy-test-task-five.vercel.app', credentials: true }));
+  app.use(cors({ origin: 'https://test.ns-paralect.infinityfreeapp.com', credentials: true }));
   app.use(helmet());
   qs(app);
   app.use(
