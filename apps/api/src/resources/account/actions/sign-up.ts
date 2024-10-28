@@ -30,7 +30,7 @@ async function handler(ctx: AppKoaContext<SignUpParams>) {
     email,
     fullName: `Full Name`,
     passwordHash: hash.toString(),
-    isEmailVerified: false,
+    isEmailVerified: true,
     signupToken,
   });
 

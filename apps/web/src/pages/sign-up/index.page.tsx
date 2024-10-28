@@ -14,6 +14,7 @@ import { RoutePath } from 'routes';
 import config from 'config';
 
 import { SignUpParams } from 'types';
+import { useRouter } from 'next/router';
 
 type SignUpResponse = { signupToken?: string };
 
@@ -33,6 +34,7 @@ const passwordRules = [
 ];
 
 const SignUp: NextPage = () => {
+  const router = useRouter();
   const [email, setEmail] = useState<string | null>(null);
   const [signupToken, setSignupToken] = useState<string | null>(null);
   const [registered, setRegistered] = useState(false);
@@ -87,15 +89,15 @@ const SignUp: NextPage = () => {
           <Title order={2}>Thanks!</Title>
 
           <Text size="md" c="gray.6">
-            Please follow the instructions from the email to complete a sign up process. We sent an email with a
-            confirmation link to <b>{email}</b>
+            Your account has been registered, <b>{email}</b>. <br />
+            Please, Sign in.
           </Text>
 
           {signupToken && (
             <Stack gap={0}>
-              <Anchor size="sm" href={`${config.API_URL}/account/verify-email?token=${signupToken}`} target="_blank">
-                Verify email
-              </Anchor>
+              <Button onClick={() => router.push('/sign-in')} w="fit-content" style={{ alignSelf: 'center' }}>
+                Login
+              </Button>
             </Stack>
           )}
         </Stack>
