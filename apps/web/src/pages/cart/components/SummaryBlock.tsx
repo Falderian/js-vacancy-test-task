@@ -1,5 +1,6 @@
-import { Button, Card, Divider, Flex, Text } from '@mantine/core';
+import React from 'react';
 import { useRouter } from 'next/router';
+import { Button, Card, Divider, Flex, Text } from '@mantine/core';
 
 type Props = {
   sum: number;

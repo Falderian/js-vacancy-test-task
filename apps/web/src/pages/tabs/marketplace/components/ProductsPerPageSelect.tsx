@@ -1,5 +1,6 @@
-import { Select } from '@mantine/core';
+import React from 'react';
 import { useRouter } from 'next/router';
+import { Select } from '@mantine/core';
 
 const ProductsPerPageSelect = () => {
   const router = useRouter();

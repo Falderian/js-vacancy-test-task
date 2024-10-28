@@ -1,9 +1,11 @@
-import { Loader, Stack } from '@mantine/core';
+import React, { useEffect, useMemo } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
-import { useCart } from '../../contexts/cart.context';
-import { accountApi } from '../../resources/account';
-import { useCheckout } from '../../resources/product/product.api';
+import { Loader, Stack } from '@mantine/core';
+
+import { accountApi } from 'resources/account';
+import { useCheckout } from 'resources/product/product.api';
+
+import { useCart } from 'contexts/cart.context';
 
 const CheckoutPage = () => {
   const { push } = useRouter();

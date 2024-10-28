@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useEffect, useMemo, useState } from 'react';
+
 import { IProduct } from '../resources/product/product.api';
 
 type IExtendedProd = IProduct & {
@@ -52,11 +53,18 @@ export const CartProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const clearCart = () => updateLocalStorage({});
 
-  return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, removeProduct, clearCart }}>
-      {children}
-    </CartContext.Provider>
+  const value = useMemo(
+    () => ({
+      cart,
+      addToCart,
+      removeFromCart,
+      removeProduct,
+      clearCart,
+    }),
+    [cart],
   );
+
+  return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 };
 
 export const useCart = () => {

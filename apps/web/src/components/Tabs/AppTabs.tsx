@@ -1,6 +1,7 @@
-import { useState, useRef, useEffect } from 'react';
-import { Tabs } from '@mantine/core';
+import React, { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/router';
+import { Tabs } from '@mantine/core';
+
 import classes from './index.module.css';
 
 const AppTabs = () => {

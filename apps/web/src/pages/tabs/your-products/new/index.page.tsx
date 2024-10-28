@@ -1,9 +1,10 @@
-import { Button, FileInput, Flex, Image, Stack, Text, TextInput } from '@mantine/core';
+import React, { useState } from 'react';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { Button, FileInput, Flex, Image, Stack, Text, TextInput } from '@mantine/core';
 import { Controller, useForm } from 'react-hook-form';
-import { accountApi } from '../../../../resources/account';
-import { CreateProductData, useCreateProduct } from '../../../../resources/product/product.api';
+
+import { accountApi } from 'resources/account';
+import { CreateProductData, useCreateProduct } from 'resources/product/product.api';
 
 const NewProduct = () => {
   const { data: account } = accountApi.useGet();

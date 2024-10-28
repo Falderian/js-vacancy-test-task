@@ -1,6 +1,8 @@
-import { Flex, Loader, Stack, Text } from '@mantine/core';
+import React from 'react';
 import { useRouter } from 'next/router';
-import { useList } from '../../../resources/product/product.api';
+import { Flex, Loader, Stack, Text } from '@mantine/core';
+
+import { useList } from 'resources/product/product.api';
 
 import Filters from './components/Filters';
 import ProductsList from './components/ProductsList';
@@ -27,9 +29,10 @@ const Marketplace = () => {
       <Filters />
       <Stack w="100%" align="center">
         <Search />
-        {isLoading ? (
-          <Loader />
-        ) : data?.totalItems ? (
+
+        {isLoading && <Loader />}
+
+        {!isLoading && data?.totalItems ? (
           <>
             <ProductsList data={data.products} />
             <Stack>
@@ -38,7 +41,7 @@ const Marketplace = () => {
             </Stack>
           </>
         ) : (
-          <Text>No results were found</Text>
+          !isLoading && <Text>No results were found</Text>
         )}
       </Stack>
     </Flex>

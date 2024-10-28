@@ -1,18 +1,13 @@
+import React, { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Flex, Stack, Text, TextInput } from '@mantine/core';
 import { IconX } from '@tabler/icons-react';
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from 'react';
-
-import { useRouter } from 'next/router';
 
 const Filters = () => {
   const router = useRouter();
   const { query } = router;
   const [min, setMin] = useState(query.min || '');
   const [max, setMax] = useState(query.max || '');
-
-  useEffect(() => {
-    if (!query.min && !query.max) resetFilters();
-  }, [query.min, query.max]);
 
   useEffect(() => {
     const newQuery = { ...query };
@@ -29,6 +24,10 @@ const Filters = () => {
     setMin('');
     setMax('');
   }, []);
+
+  useEffect(() => {
+    if (!query.min && !query.max) resetFilters();
+  }, [query.min, query.max]);
 
   const inputs = useMemo(
     () => [

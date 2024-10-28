@@ -4,11 +4,11 @@ import { Anchor, AppShell, Flex, Text } from '@mantine/core';
 
 import { accountApi } from 'resources/account';
 
+import AppTabs from 'components/Tabs/AppTabs';
+
 import { LogoImage } from 'public/images';
 
 import { RoutePath } from 'routes';
-
-import AppTabs from '../../../../../components/Tabs/AppTabs';
 
 import HeaderIcons from './components/HeaderIcons';
 

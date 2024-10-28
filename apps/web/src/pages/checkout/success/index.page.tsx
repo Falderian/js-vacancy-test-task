@@ -1,7 +1,8 @@
-import { Button, Image, Stack, Text } from '@mantine/core';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useCart } from '../../../contexts/cart.context';
+import { Button, Image, Stack, Text } from '@mantine/core';
+
+import { useCart } from 'contexts/cart.context';
 
 const SuccessPage = () => {
   const { clearCart } = useCart();

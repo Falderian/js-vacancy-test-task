@@ -1,3 +1,4 @@
+import React, { ComponentType, useEffect, useMemo, useState } from 'react';
 import { Paper, Stack, Table as TableContainer, TableProps as TableContainerProps } from '@mantine/core';
 import { useSetState } from '@mantine/hooks';
 import {
@@ -11,7 +12,6 @@ import {
   Table as TanstackTable,
   useReactTable,
 } from '@tanstack/react-table';
-import { ComponentType, useEffect, useMemo, useState } from 'react';
 
 import { TableContext } from 'contexts';
 

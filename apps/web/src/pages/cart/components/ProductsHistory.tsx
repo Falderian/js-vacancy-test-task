@@ -1,6 +1,9 @@
+import React from 'react';
 import { Flex, Image, Loader, Table, Text } from '@mantine/core';
-import { accountApi } from '../../../resources/account';
-import { useHistory } from '../../../resources/product/product.api';
+
+import { accountApi } from 'resources/account';
+import { useHistory } from 'resources/product/product.api';
+
 import SummaryBlock from './SummaryBlock';
 
 const ProductsHistory = () => {
@@ -13,7 +16,7 @@ const ProductsHistory = () => {
   if (!data || !data.count)
     return (
       <Text>
-        You haven't made any purchases yet. <br /> Go to the marketplace and make purchases.
+        You haven&apos;t made any purchases yet. <br /> Go to the marketplace and make purchases.
       </Text>
     );
 
@@ -36,7 +39,7 @@ const ProductsHistory = () => {
   });
   return (
     <Flex gap={80} style={{ overflow: 'auto' }} mah="80vh" pt={32}>
-      <Table border={0} highlightOnHover withRowBorders={true}>
+      <Table border={0} highlightOnHover withRowBorders>
         <Table.Thead>
           <Table.Tr c="gray">
             <Table.Th fw={400}>Item</Table.Th>

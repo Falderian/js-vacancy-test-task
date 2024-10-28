@@ -1,5 +1,5 @@
+import React, { useRouter } from 'next/router';
 import { Button, Image, Stack, Text } from '@mantine/core';
-import { useRouter } from 'next/router';
 
 const ErrorPage = () => {
   const { push } = useRouter();

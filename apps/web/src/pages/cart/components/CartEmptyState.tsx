@@ -1,6 +1,6 @@
-import { Stack, Button, Image, Text } from '@mantine/core';
-
+import React from 'react';
 import { useRouter } from 'next/router';
+import { Button, Image, Stack, Text } from '@mantine/core';
 
 const CartEmptyState = () => {
   const { push } = useRouter();
@@ -8,10 +8,10 @@ const CartEmptyState = () => {
     <Stack justify="center" align="center" pt="10%">
       <Image src="/images/empty_state.png" alt="Empty state" w={200} />
       <Text fw={700} fz="lg">
-        Oops, there's nothing here yet!
+        Oops, there&apos;s nothing here yet!
       </Text>
       <Text ta="center" fz="sm" c="gray">
-        You haven't made any purchases yet.
+        You haven&apos;t made any purchases yet.
         <br />
         Go to the marketplace and make purchases.
       </Text>

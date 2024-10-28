@@ -1,9 +1,12 @@
+import React from 'react';
+import { useRouter } from 'next/router';
 import { Card, Flex, Loader, Stack, Text, useMantineTheme } from '@mantine/core';
 import { IconCirclePlusFilled } from '@tabler/icons-react';
-import { useRouter } from 'next/router';
-import YourProductCard from '../../../components/YourProductCard';
-import { accountApi } from '../../../resources/account';
-import { useUserProducts } from '../../../resources/product/product.api';
+
+import { accountApi } from 'resources/account';
+import { useUserProducts } from 'resources/product/product.api';
+
+import YourProductCard from 'components/YourProductCard';
 
 const YourProducts = () => {
   const theme = useMantineTheme();

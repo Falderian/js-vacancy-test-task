@@ -1,11 +1,12 @@
-import { Pagination } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { Pagination } from '@mantine/core';
 
 const ProductsPagination = ({ total }: { total: number }) => {
   const router = useRouter();
   const { query } = router;
-  const initialPage = parseInt(query.page as string) || 1;
+
+  const initialPage = parseInt(query.page as string, 10) || 1;
 
   const [page, setPage] = useState(initialPage);
 

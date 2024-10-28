@@ -1,5 +1,5 @@
+import React, { FC, ReactElement } from 'react';
 import { Center, Image, SimpleGrid, Stack } from '@mantine/core';
-import { FC, ReactElement } from 'react';
 
 interface UnauthorizedLayoutProps {
   children: ReactElement;

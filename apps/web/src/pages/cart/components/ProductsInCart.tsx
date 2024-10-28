@@ -1,6 +1,8 @@
+import React from 'react';
 import { Flex, Image, Table, Text } from '@mantine/core';
 import { IconMinus, IconPlus, IconX } from '@tabler/icons-react';
-import { useCart } from '../../../contexts/cart.context';
+
+import { useCart } from 'contexts/cart.context';
 
 import SummaryBlock from './SummaryBlock';
 
@@ -44,7 +46,7 @@ const ProductsInCart = () => {
 
   return (
     <Flex gap={80}>
-      <Table border={0} highlightOnHover withRowBorders={true}>
+      <Table border={0} highlightOnHover withRowBorders>
         <Table.Thead>
           <Table.Tr c="gray">
             <Table.Th fw={400}>Item</Table.Th>

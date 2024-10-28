@@ -1,18 +1,18 @@
-import { Anchor, Button, Flex, Group, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
+import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { Anchor, Button, Flex, Group, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
+import { IconCircleCheck } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
 
 import { accountApi } from 'resources/account';
 
 import { handleApiError } from 'utils';
 
-import config from 'config';
 import { RoutePath } from 'routes';
+import config from 'config';
 
-import { IconCircleCheck } from '@tabler/icons-react';
 import { SignUpParams } from 'types';
 
 type SignUpResponse = { signupToken?: string };
@@ -38,7 +38,9 @@ const SignUp: NextPage = () => {
   const [registered, setRegistered] = useState(false);
 
   const [passwordRulesData, setPasswordRulesData] = useState(passwordRules);
-  const [opened, setOpened] = useState(false);
+
+  // eslint-disable-next-line @typescript-eslint/naming-convention, @typescript-eslint/no-unused-vars
+  const [_, setOpened] = useState(false);
 
   const {
     register,
@@ -70,10 +72,7 @@ const SignUp: NextPage = () => {
         setRegistered(true);
         setEmail(data.email);
       },
-      onError: (e) => {
-        console.log(e);
-        return handleApiError(e, setError);
-      },
+      onError: (e) => handleApiError(e, setError),
     });
   };
 

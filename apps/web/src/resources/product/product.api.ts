@@ -72,23 +72,18 @@ export const useList = <T extends ProductsListParams>(params: T) =>
 export const useCheckout = (
   userId: string,
   items: Array<{ productId: string; title: string; price: number; quantity: number }>,
-) => {
-  return useQuery<{ url: string }>({
+) => useQuery<{ url: string }>({
     queryKey: ['checkout', items],
     queryFn: () => apiService.post('/products/checkout', items, { params: { userId } }),
     enabled: items.length > 0,
   });
-};
 
-export const useHistory = (userId: string) => {
-  return useQuery<{ count: string; results: any[] }>({
+export const useHistory = (userId: string) => useQuery<{ count: string; results: any[] }>({
     queryKey: ['history', userId],
     queryFn: () => apiService.get('products/history', { userId }),
   });
-};
 
-export const useCreateProduct = () => {
-  return useMutation({
+export const useCreateProduct = () => useMutation({
     mutationFn: async (data: FormData) => {
       const response = await apiService.post<any, { url: string }>('products/new', data, {
         headers: {
@@ -98,20 +93,15 @@ export const useCreateProduct = () => {
       return response.data;
     },
   });
-};
 
-export const useUserProducts = (userId: string) => {
-  return useQuery<{ products: IYourProduct[] }>({
+export const useUserProducts = (userId: string) => useQuery<{ products: IYourProduct[] }>({
     queryKey: ['history', userId],
     queryFn: () => apiService.get('products/user', { userId }),
   });
-};
 
-export const useDeleteProduct = () => {
-  return useMutation({
+export const useDeleteProduct = () => useMutation({
     mutationFn: async (productId: string) => {
       const response = await apiService.delete<any, any>(`products/${productId}`);
       return response.data;
     },
   });
-};

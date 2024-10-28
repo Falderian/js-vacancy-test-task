@@ -1,11 +1,14 @@
-import { Stack, Tabs } from '@mantine/core';
+import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useEffect } from 'react';
-import { useCart } from '../../contexts/cart.context';
+import { Stack, Tabs } from '@mantine/core';
+
+import { useCart } from 'contexts/cart.context';
+
 import CartEmptyState from './components/CartEmptyState';
-import classes from './components/index.module.css';
 import ProductsHistory from './components/ProductsHistory';
 import ProductsInCart from './components/ProductsInCart';
+
+import classes from './components/index.module.css';
 
 type TTabs = 'my-cart' | 'history';
 

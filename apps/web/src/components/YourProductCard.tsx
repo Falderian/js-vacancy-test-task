@@ -1,6 +1,8 @@
+import React from 'react';
 import { Card, Chip, Container, Flex, Image, Indicator, Text } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { QueryObserverResult, RefetchOptions } from '@tanstack/react-query';
+
 import { IYourProduct, useDeleteProduct } from '../resources/product/product.api';
 
 interface Props {
@@ -44,7 +46,7 @@ const YourProductCard = ({ product, refetch }: Props) => {
         <Chip
           color={statusBadge.color}
           variant="light"
-          checked={true}
+          checked
           styles={{
             label: { backgroundColor: statusBadge.backgroundColor },
             iconWrapper: { display: 'none' },

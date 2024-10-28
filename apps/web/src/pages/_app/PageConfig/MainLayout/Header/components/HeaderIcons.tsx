@@ -1,9 +1,11 @@
+import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 import { Flex, Indicator } from '@mantine/core';
 import { IconLogout, IconShoppingCart } from '@tabler/icons-react';
-import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
-import { useCart } from '../../../../../../contexts/cart.context';
-import { accountApi } from '../../../../../../resources/account';
+
+import { accountApi } from 'resources/account';
+
+import { useCart } from 'contexts/cart.context';
 
 const HeaderIcons = () => {
   const router = useRouter();

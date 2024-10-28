@@ -1,7 +1,7 @@
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import { Flex, Menu, Text } from '@mantine/core';
 import { IconArrowsSort, IconChevronDown, IconChevronUp } from '@tabler/icons-react';
-import { useRouter } from 'next/router';
-import { useState } from 'react';
 
 const ProductsSortMenu = () => {
   const router = useRouter();
