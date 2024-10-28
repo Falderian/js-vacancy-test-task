@@ -21,8 +21,6 @@ const schema = paginationSchema.extend({
     .optional(),
   sort: z
     .object({
-      firstName: z.enum(['asc', 'desc']).optional(),
-      lastName: z.enum(['asc', 'desc']).optional(),
       createdOn: z.enum(['asc', 'desc']).default('asc'),
     })
     .default({}),

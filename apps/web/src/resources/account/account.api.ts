@@ -60,7 +60,7 @@ export const useGet = (options = {}) =>
   useQuery<User>({
     queryKey: ['account'],
     queryFn: () => apiService.get('/account'),
-    staleTime: 5 * 1000,
+    staleTime: 60 * 60 * 1000,
     ...options,
   });
 
