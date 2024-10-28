@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NextPage } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { Anchor, Button, Flex, Group, PasswordInput, Stack, Text, TextInput, Title } from '@mantine/core';
 import { IconCircleCheck } from '@tabler/icons-react';
 import { useForm } from 'react-hook-form';
@@ -13,7 +14,6 @@ import { handleApiError } from 'utils';
 import { RoutePath } from 'routes';
 
 import { SignUpParams } from 'types';
-import { useRouter } from 'next/router';
 
 type SignUpResponse = { signupToken?: string };
 
