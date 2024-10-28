@@ -4,6 +4,9 @@
   "description": "Next.js web",
   "author": "Paralect",
   "license": "MIT",
+  "engines": {
+    "node": "22.10.0"
+  },
   "scripts": {
     "build": "next build",
     "dev": "next dev -p 3002",
