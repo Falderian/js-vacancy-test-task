@@ -21,7 +21,7 @@ const Marketplace = () => {
     title: search,
     page: +(page || 1),
     perPage: +(perPage || 6),
-    sort: sort?.toString() || 'newest',
+    sort: sort?.toString() || 'title asc',
   });
 
   return (

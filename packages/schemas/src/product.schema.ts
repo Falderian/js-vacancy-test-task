@@ -12,7 +12,7 @@ export const productSchema = z
 
 export const productsPaginationSchema = z.object({
   page: z.string().min(1).default('1'),
-  sort: z.enum(['newest', 'oldest', 'title asc', 'title desc']).default('newest'),
+  sort: z.enum(['title asc', 'title desc', 'cheap', 'expensive']).default('title asc'),
   filter: z
     .object({
       title: z.string().optional(),

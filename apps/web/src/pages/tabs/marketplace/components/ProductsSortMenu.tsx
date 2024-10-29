@@ -6,7 +6,7 @@ import { IconArrowsSort, IconChevronDown, IconChevronUp } from '@tabler/icons-re
 const ProductsSortMenu = () => {
   const router = useRouter();
   const { query } = router;
-  const selectedValue = query.sort || 'newest';
+  const selectedValue = query.sort || 'title asc';
   const [menuOpened, setMenuOpened] = useState(false);
 
   const handleChange = (value: string | null) => {
@@ -21,12 +21,12 @@ const ProductsSortMenu = () => {
           <Flex align="center" gap={2} style={{ cursor: 'pointer' }}>
             <IconArrowsSort stroke={1} size={16} />
             <Text size="sm">Sort by</Text>
-            <Text size="sm">{selectedValue}</Text>{' '}
+            <Text size="sm">{selectedValue}</Text>
             {menuOpened ? <IconChevronUp size={16} /> : <IconChevronDown size={16} />}
           </Flex>
         </Menu.Target>
         <Menu.Dropdown>
-          {['newest', 'oldest', 'title asc', 'title desc'].map((value) => (
+          {['title asc', 'title desc', 'cheap', 'expensive'].map((value) => (
             <Menu.Item key={value} onClick={() => handleChange(value)} disabled={value === selectedValue}>
               {value}
             </Menu.Item>
