@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Flex, Image, Loader, Stack, Text } from '@mantine/core';
+import { Button, Flex, Image, Stack, Text } from '@mantine/core';
 
 import { IProduct } from 'resources/product/product.api';
 
