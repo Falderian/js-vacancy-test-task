@@ -1,7 +1,9 @@
-import { Button, Container, Flex, Image, Stack, Text } from '@mantine/core';
-import { useCart } from 'contexts/cart.context';
 import React from 'react';
+import { Button, Container, Flex, Image, Stack, Text } from '@mantine/core';
+
 import { IProduct } from 'resources/product/product.api';
+
+import { useCart } from 'contexts/cart.context';
 
 const ProductCard = ({ product }: { product: IProduct }) => {
   const { cart, addToCart, removeFromCart } = useCart();
