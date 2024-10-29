@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Flex, Image, Stack, Text } from '@mantine/core';
+import { Button, Flex, Image, Loader, Stack, Text } from '@mantine/core';
 
 import { IProduct } from 'resources/product/product.api';
 
@@ -21,7 +21,13 @@ const ProductCard = ({ product }: { product: IProduct }) => {
       w={230}
     >
       <Stack align="center" justify="center" h="100%">
-        <Image src={product.image} fallbackSrc="/images/empty_state.png" radius="5px 5px 0 0" />
+        <Image
+          src={product.image}
+          fallbackSrc="/images/empty_state.png"
+          radius="5px 5px 0 0"
+          loading="lazy"
+          alt={`Picture of ${product.title}`}
+        />
       </Stack>
       <Stack px={18}>
         <Text size="lg" fw={700}>

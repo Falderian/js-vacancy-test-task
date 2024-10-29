@@ -42,7 +42,13 @@ const YourProductCard = ({ product, refetch }: Props) => {
           radius="md"
           size="lg"
         >
-          <Image src={product.image} fallbackSrc="/images/default_image.svg" radius="5px 5px 0 0" />
+          <Image
+            src={product.image}
+            fallbackSrc="/images/default_image.svg"
+            radius="5px 5px 0 0"
+            alt={`Picture of ${product.title}`}
+            loading="lazy"
+          />
         </Indicator>
         <Chip
           color={statusBadge.color}

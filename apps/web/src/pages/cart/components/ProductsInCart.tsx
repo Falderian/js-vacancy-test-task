@@ -17,7 +17,13 @@ const ProductsInCart = () => {
     return (
       <Table.Tr key={product._id}>
         <Table.Td w="15%">
-          <Image src={product.image} fallbackSrc="/images/empty_state.png" maw={80} />
+          <Image
+            src={product.image}
+            fallbackSrc="/images/empty_state.png"
+            maw={80}
+            alt={`Picture of ${product.title}`}
+            loading="lazy"
+          />
         </Table.Td>
         <Table.Td fw={700}>{product.title}</Table.Td>
         <Table.Td w="10%">${product.price}</Table.Td>
