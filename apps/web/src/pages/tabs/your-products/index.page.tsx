@@ -27,7 +27,7 @@ const YourProducts = () => {
         <Card
           miw={230}
           mih={300}
-          style={{ alignItems: 'center', justifyContent: 'center', cursor: 'pointer' }}
+          style={{ alignItems: 'center', justifyContent: 'center', cursor: 'pointer', border: '1px #ECECEE solid' }}
           onClick={handleNewProductClick}
         >
           <IconCirclePlusFilled color={theme.colors.blue[6]} size={40} />

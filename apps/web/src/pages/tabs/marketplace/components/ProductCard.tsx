@@ -1,8 +1,7 @@
 import React from 'react';
-import { Button, Flex, Image, Stack, Text } from '@mantine/core';
+import { Button, Flex, Image, Stack, Text, Container } from '@mantine/core';
 
 import { IProduct } from 'resources/product/product.api';
-
 import { useCart } from 'contexts/cart.context';
 
 const ProductCard = ({ product }: { product: IProduct }) => {
@@ -14,21 +13,24 @@ const ProductCard = ({ product }: { product: IProduct }) => {
     <Stack
       bg="white"
       pb={12}
-      style={{ borderRadius: 12 }}
+      style={{ borderRadius: 12, margin: 0 }}
       maw="30%"
       bd="1px #ECECEE solid"
       justify="space-between"
       w={230}
     >
-      <Stack align="center" justify="center" h="100%">
+      <Container p={0} m={0} style={{ position: 'relative' }}>
         <Image
           src={product.image}
-          fallbackSrc="/images/empty_state.png"
+          fallbackSrc="/images/default_image.svg"
           radius="5px 5px 0 0"
-          loading="lazy"
           alt={`Picture of ${product.title}`}
+          loading="lazy"
+          width={270}
+          height={200}
+          style={{ objectFit: 'cover' }}
         />
-      </Stack>
+      </Container>
       <Stack px={18}>
         <Text size="lg" fw={700}>
           {product.title}

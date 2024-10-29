@@ -28,7 +28,7 @@ const YourProductCard = ({ product, refetch }: Props) => {
   const handleClick = () => deleteMutation.mutateAsync(product._id).then(refetch);
 
   return (
-    <Card style={{ gap: 12, alignItems: 'space-between' }} w={230}>
+    <Card style={{ gap: 12, justifyContent: 'space-between', border: '1px #ECECEE solid', padding: 0 }} w={230}>
       <LoadingOverlay visible={deleteMutation.isPending} />
       <Container p={0} m={0} style={{ position: 'relative' }}>
         <Indicator
@@ -48,6 +48,9 @@ const YourProductCard = ({ product, refetch }: Props) => {
             radius="5px 5px 0 0"
             alt={`Picture of ${product.title}`}
             loading="lazy"
+            width={270}
+            height={200}
+            style={{ objectFit: 'cover' }}
           />
         </Indicator>
         <Chip
@@ -68,7 +71,7 @@ const YourProductCard = ({ product, refetch }: Props) => {
           {statusBadge.text}
         </Chip>
       </Container>
-      <Stack p={0}>
+      <Stack px={18} pb={12}>
         <Text size="lg" fw={700}>
           {product.title}
         </Text>

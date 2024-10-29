@@ -1,12 +1,9 @@
 import multer from '@koa/multer';
 import admin, { ServiceAccount } from 'firebase-admin';
-
-import { validateMiddleware } from 'middlewares';
-
-import { productSchema } from 'schemas/src/product.schema';
 import { AppKoaContext, AppRouter } from 'types';
 
 import productService from '../product.service';
+import _ from 'lodash';
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
@@ -29,7 +26,7 @@ async function handler(ctx: AppKoaContext) {
 
   const bucket = admin.storage().bucket();
 
-  const productData = ctx.validatedData as { image: string };
+  const productData = ctx.validatedData as { image: string; price: number };
   const imageFile = ctx.request.file;
 
   if (imageFile) {
@@ -50,10 +47,17 @@ async function handler(ctx: AppKoaContext) {
     }
   }
 
-  const product = await productService.insertOne(productData);
+  const payload = ctx.request.body as any;
+
+  const product = await productService.insertOne({
+    ...productData,
+    ...payload,
+    price: +payload.price,
+  });
+
   ctx.body = productService.getPublic(product);
 }
 
 export default (router: AppRouter) => {
-  router.post('/new', upload.single('image'), validateMiddleware(productSchema), handler);
+  router.post('/new', upload.single('image'), handler);
 };
