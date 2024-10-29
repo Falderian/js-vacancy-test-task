@@ -26,7 +26,7 @@ const ProductsSortMenu = () => {
           </Flex>
         </Menu.Target>
         <Menu.Dropdown>
-          {['newest', 'oldest', 'cheap', 'expensive'].map((value) => (
+          {['newest', 'oldest', 'title asc', 'title desc'].map((value) => (
             <Menu.Item key={value} onClick={() => handleChange(value)} disabled={value === selectedValue}>
               {value}
             </Menu.Item>

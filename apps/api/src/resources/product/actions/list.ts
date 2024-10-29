@@ -1,5 +1,4 @@
 import { validateMiddleware } from 'middlewares';
-
 import { PaginationParams, productsPaginationSchema } from 'schemas/src/product.schema';
 import { AppKoaContext, AppRouter } from 'types';
 
@@ -26,11 +25,11 @@ const list = async (ctx: AppKoaContext<PaginationParams>) => {
     case 'oldest':
       sortOptions.createdOn = 1;
       break;
-    case 'cheap':
-      sortOptions.price = 1;
+    case 'title asc':
+      sortOptions.title = 1;
       break;
-    case 'expensive':
-      sortOptions.price = -1;
+    case 'title desc':
+      sortOptions.title = -1;
       break;
     default:
       break;
