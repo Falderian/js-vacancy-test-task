@@ -5,7 +5,7 @@ import { Select } from '@mantine/core';
 const ProductsPerPageSelect = () => {
   const router = useRouter();
   const { query } = router;
-  const selectedValue = query.perPage || '6';
+  const selectedValue = query.perPage || '12';
 
   const handleChange = (v: string | null) => {
     if (!v || v === selectedValue) return;

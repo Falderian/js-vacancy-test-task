@@ -20,7 +20,7 @@ const Marketplace = () => {
     max,
     title: search,
     page: +(page || 1),
-    perPage: +(perPage || 6),
+    perPage: +(perPage || 12),
     sort: sort?.toString() || 'title asc',
   });
 

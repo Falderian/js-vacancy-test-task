@@ -19,7 +19,7 @@ const checkout = async (ctx: AppKoaContext<BoughtItemParams[]>) => {
       product_data: {
         name: item.title,
       },
-      unit_amount: item.price * 100,
+      unit_amount: parseFloat((item.price * 100).toFixed(2)),
     },
     quantity: item.quantity,
   }));
@@ -32,9 +32,8 @@ const checkout = async (ctx: AppKoaContext<BoughtItemParams[]>) => {
       success_url: `${process.env.WEB_URL}/checkout/success`,
       cancel_url: `${process.env.WEB_URL}/checkout/error`,
     });
-    await purchasedProductsService.purchaseItems(userId as string, items);
-
     ctx.body = { url: session.url };
+    await purchasedProductsService.purchaseItems(userId as string, items);
   } catch (err: any) {
     ctx.status = err.statusCode || err.status || 500;
     ctx.body = {

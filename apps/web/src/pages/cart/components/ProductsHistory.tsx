@@ -39,7 +39,7 @@ const ProductsHistory = () => {
         <Table.Td w="10%">${product.price}</Table.Td>
         <Table.Td w="10%">{product.quantity}</Table.Td>
         <Table.Td w="10%">${product.totalPrice}</Table.Td>
-        <Table.Td w="15%">{new Date(product.boughtOn).toLocaleString()}</Table.Td>
+        <Table.Td w="15%">{new Date(product.createdOn).toLocaleString()}</Table.Td>
       </Table.Tr>
     );
   });
